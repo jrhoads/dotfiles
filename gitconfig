@@ -1,0 +1,16 @@
+[user]
+	email = joseph_rhoads@brown.edu
+	name = jrhoads
+[core]
+	autocrlf = input
+[http]
+	postBuffer = 524288000
+[color]
+	ui = true
+[alias]
+	co = checkout
+	br = branch
+	s = status -s
+	lg = log --oneline --decorate --all --graph
+[push]
+	default = simple
