@@ -34,6 +34,7 @@ set colorcolumn=85
 "-----------------------------------------------------------------------------
 call plug#begin('~/.vim/plugged')
 "# Colors
+Plug 'sjl/badwolf'
 Plug 'https://github.com/vim-scripts/Colour-Sampler-Pack.git'
 Plug 'https://github.com/altercation/vim-colors-solarized.git'
 Plug 'https://github.com/altercation/vim-colors-solarized.git'
@@ -116,6 +117,9 @@ Plug 'https://github.com/bronson/vim-trailing-whitespace.git'
 Plug 'https://github.com/elzr/vim-json.git'
 Plug 'https://github.com/airblade/vim-gitgutter.git'
 Plug 'https://github.com/alfredodeza/pytest.vim.git'
+Plug 'https://github.com/tmhedberg/SimpylFold.git'
+Plug 'https://github.com/nvie/vim-flake8.git'
+Plug 'bling/vim-airline'
 call plug#end()
 "-----------------------------------------------------------------------------
 " NERD Tree Plugin Settings
@@ -147,6 +151,8 @@ nmap <Leader>fw :Ack<space><C-R><C-W><CR>
 " Toggle List Characters
 nmap <leader>l :set list!<CR>
 " Toggle Folding
+set foldmethod=indent
+set foldlevel=99
 nnoremap <Space> za
 " Escape from the home row
 inoremap jj <Esc>
@@ -155,6 +161,18 @@ inoremap kj <Esc>
 inoremap kk <Esc>
 " When saving py files, delete trailing whitespace
 au BufWritePre *.py :%s/\s\+$//e
+au BufNewFile,BufRead *.py
+    \ set tabstop=4
+    \ set softtabstop=4
+    \ set shiftwidth=4
+    \ set textwidth=79
+    \ set expandtab
+    \ set autoindent
+    \ set fileformat=unix
+
+au BufNewFile,BufRead *.js,*.html,*.css: set tabstop=2
+au BufNewFile,BufRead *.js,*.html,*.css: set softtabstop=2
+au BufNewFile,BufRead *.js,*.html,*.css: set shiftwidth=2
 "-----------------------------------------------------------------------------
 " SplitJoin Plugin Settings
 "-----------------------------------------------------------------------------
@@ -164,7 +182,7 @@ nmap sj :SplitjoinJoin<cr>
 " Svndiff Plugin Settings
 "-----------------------------------------------------------------------------
 noremap <F3> :call Svndiff("prev")<CR>
-noremap <F5> :call Svndiff("next")<CR>
+noremap <F5> :GundoToggle<CR>
 noremap <F6> :call Svndiff("clear")<CR>
 hi DiffAdd      ctermfg=0 ctermbg=2 guibg='green'
 hi DiffDelete   ctermfg=0 ctermbg=1 guibg='red'
@@ -209,3 +227,8 @@ iab fone      phone
 iab Fone      Phone
 iab collectoin collection
 iab Collectoin Collection
+"-----------------------------------------------------------------------------
+" Colorscheme
+"-----------------------------------------------------------------------------
+set background=light
+colorscheme badwolf
