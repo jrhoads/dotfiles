@@ -161,14 +161,16 @@ inoremap kj <Esc>
 inoremap kk <Esc>
 " When saving py files, delete trailing whitespace
 au BufWritePre *.py :%s/\s\+$//e
-au BufNewFile,BufRead *.py
-    \ set tabstop=4
-    \ set softtabstop=4
-    \ set shiftwidth=4
-    \ set textwidth=79
-    \ set expandtab
-    \ set autoindent
-    \ set fileformat=unix
+au BufNewFile,BufRead *.py call SetPythonOptions()
+function SetPythonOptions()
+    set tabstop=4
+    set softtabstop=4
+    set shiftwidth=4
+    set textwidth=79
+    set expandtab
+    set autoindent
+    set fileformat=unix
+endfunction
 
 au BufNewFile,BufRead *.js,*.html,*.css: set tabstop=2
 au BufNewFile,BufRead *.js,*.html,*.css: set softtabstop=2
