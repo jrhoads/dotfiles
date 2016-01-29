@@ -84,15 +84,6 @@ if [ -x /usr/bin/dircolors ]; then
     alias egrep='egrep --color=auto'
 fi
 
-# some more ls aliases
-alias ll='ls -alF'
-alias la='ls -A'
-alias l='ls -CF'
-
-# Add an "alert" alias for long running commands.  Use like so:
-#   sleep 10; alert
-alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
-alias :q='exit'
 
 # Alias definitions.
 # You may want to put all your additions into a separate file like
@@ -113,3 +104,12 @@ if ! shopt -oq posix; then
     . /etc/bash_completion
   fi
 fi
+
+if [ "$PS1" != "" -a "${STARTED_TMUX:-x}" = x -a "${SSH_TTY:-x}" != x ]
+then
+	STARTED_TMUX=1; export STARTED_TMUX
+	sleep 1
+	( (tmux has-session -t remote && tmux attach-session -t remote) || (tmux new-session -s remote) ) && exit 0
+	echo "tmux failed to start"
+fi
+
