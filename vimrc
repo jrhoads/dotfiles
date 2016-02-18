@@ -66,7 +66,8 @@ Plug 'https://github.com/tpope/vim-rails.git'
 Plug 'https://github.com/vim-ruby/vim-ruby.git'
 Plug 'https://github.com/wlangstroth/vim-haskell.git'
 "# Tools
-Plug 'bling/vim-airline'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 Plug 'easymotion/vim-easymotion'
 Plug 'tomtom/tlib_vim'
 Plug 'https://github.com/MarcWeber/vim-addon-mw-utils.git'
@@ -176,6 +177,10 @@ hi DiffAdd      ctermfg=0 ctermbg=2 guibg='green'
 hi DiffDelete   ctermfg=0 ctermbg=1 guibg='red'
 hi DiffChange   ctermfg=0 ctermbg=3 guibg='yellow'
 let g:svndiff_autoupdate = 1
+"-----------------------------------------------------------------------------
+" Airline Variables
+"-----------------------------------------------------------------------------
+let g:airline_powerline_fonts = 1
 "-----------------------------------------------------------------------------
 " Snipmate variables
 "-----------------------------------------------------------------------------
