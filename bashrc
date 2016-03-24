@@ -84,6 +84,8 @@ if [ -x /usr/bin/dircolors ]; then
     alias egrep='egrep --color=auto'
 fi
 
+# Default tmux.conf variables
+export TMUX_STATUS_BG="green"
 
 # Alias definitions.
 # You may want to put all your additions into a separate file like
@@ -92,6 +94,11 @@ fi
 
 if [ -f ~/.bash_aliases ]; then
     . ~/.bash_aliases
+fi
+
+# Local Bash config or overwrites
+if [ -f ~/.bash_local ]; then
+	. ~/.bash_local
 fi
 
 # enable programmable completion features (you don't need to enable
@@ -111,8 +118,5 @@ then
 	sleep 1
 	( (tmux has-session -t remote && tmux attach-session -t remote) || (tmux new-session -s remote) ) && exit 0
 	echo "tmux failed to start"
-fi
-if [ -f ~/.bash_local ]; then
-	. ~/.bash_local
 fi
 
