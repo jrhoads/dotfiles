@@ -16,3 +16,4 @@ Session.vim
 *.aux
 *.elc
 vim/plugged
+vim/.netrwhist
