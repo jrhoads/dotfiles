@@ -112,4 +112,7 @@ then
 	( (tmux has-session -t remote && tmux attach-session -t remote) || (tmux new-session -s remote) ) && exit 0
 	echo "tmux failed to start"
 fi
+if [ -f ~/.bash_local ]; then
+	. ~/.bash_local
+fi
 
