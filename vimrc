@@ -220,6 +220,8 @@ iab fone      phone
 iab Fone      Phone
 iab collectoin collection
 iab Collectoin Collection
+iab allignment alignment
+iab Allignment Alignment
 "-----------------------------------------------------------------------------
 " Colorscheme
 "-----------------------------------------------------------------------------
