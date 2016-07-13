@@ -107,6 +107,7 @@ Plug 'tpope/vim-dispatch'
 Plug 'tpope/vim-endwise'
 Plug 'tpope/vim-eunuch'
 Plug 'tpope/vim-fugitive'
+Plug 'christoomey/vim-tmux-runner'
 call plug#end()
 "-----------------------------------------------------------------------------
 " NERD Tree Plugin Settings
@@ -226,3 +227,8 @@ iab Allignment Alignment
 " Colorscheme
 "-----------------------------------------------------------------------------
 colorscheme badwolf
+set colorcolumn=80
+"-----------------------------------------------------------------------------
+" Vim Tmux Runner
+"-----------------------------------------------------------------------------
+let g:VtrUseVtrMaps = 1
