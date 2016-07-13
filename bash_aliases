@@ -1,6 +1,7 @@
-alias nenv='virtualenv --no-site-package --prompt=\(${PWD##*/}-env\) env'
 alias senv='source env/bin/activate'
 alias denv='deactivate'
+alias pipup='pip install -U pip'
+alias nenv='virtualenv --no-site-package --prompt=\(${PWD##*/}-env\) env && senv && pipup'
 alias :q='exit'
 
 # some more ls aliases
