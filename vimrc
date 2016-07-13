@@ -119,7 +119,7 @@ nmap <silent><Leader>fm <Esc>:Pytest method<CR>
 " NERD Tree Plugin Settings
 "-----------------------------------------------------------------------------
 " Toggle the NERD Tree on an off with F7
-nmap <F7> :NERDTreeToggle<CR>
+nmap <F6> :NERDTreeToggle<CR>
 let NERDTreeIgnore=[ '\.ncb$', '\.suo$', '\.vcproj\.RIMNET', '\.obj$',
             \ '\.ilk$', '^BuildLog.htm$', '\.pdb$', '\.idb$',
             \ '\.embed\.manifest$', '\.embed\.manifest.res$',
