@@ -8,27 +8,12 @@ set noswapfile
 set cursorline
 set hidden
 set rnu
-set listchars=tab:▸\ ,trail:·,eol:¬
+set number
+set listchars=tab:│·,trail:·,eol:¬
 "-----------------------------------------------------------------------------
 " LEADER REMAPPING
 "-----------------------------------------------------------------------------
 let mapleader = ","
-"-----------------------------------------------------------------------------
-" Navigate through windows and buffers with the leader
-"-----------------------------------------------------------------------------
-map <Leader>[ <C-W>W
-map <Leader>] <C-W>w
-map <Leader>- :bp<cr>
-map <Leader>= :bn<cr>
-map <Leader><TAB> <C-W>W
-map <Leader><Space> :bn<cr>
-map <Leader><S-Space> :bp<cr>
-"-----------------------------------------------------------------------------
-" Split Preferences
-"-----------------------------------------------------------------------------
-set splitbelow
-set splitright
-set colorcolumn=85
 "-----------------------------------------------------------------------------
 " Install Plugins
 "-----------------------------------------------------------------------------
@@ -110,12 +95,25 @@ Plug 'tpope/vim-fugitive'
 Plug 'christoomey/vim-tmux-runner'
 call plug#end()
 "-----------------------------------------------------------------------------
+" Navigate through windows and buffers with the leader
+"-----------------------------------------------------------------------------
+map <Leader>[ <C-W>W
+map <Leader>] <C-W>w
+map <Leader><TAB> <C-W>W
+map <Leader><Space> :bn<cr>
+map <Leader><S-Space> :bp<cr>
+"-----------------------------------------------------------------------------
+" Split Preferences
+"-----------------------------------------------------------------------------
+set splitbelow
+set splitright
 "-----------------------------------------------------------------------------
 " PyTest Plugin Settings
 "-----------------------------------------------------------------------------
 nmap <silent><Leader>ff <Esc>:Pytest file<CR>
 nmap <silent><Leader>fc <Esc>:Pytest class<CR>
 nmap <silent><Leader>fm <Esc>:Pytest method<CR>
+"-----------------------------------------------------------------------------
 " NERD Tree Plugin Settings
 "-----------------------------------------------------------------------------
 " Toggle the NERD Tree on an off with F7
@@ -155,6 +153,7 @@ inoremap kj <Esc>
 inoremap kk <Esc>
 " When saving py files, delete trailing whitespace
 au BufWritePre *.py :%s/\s\+$//e
+" When workign with python files use the following options
 au BufNewFile,BufRead *.py call SetPythonOptions()
 function SetPythonOptions()
     set tabstop=4
@@ -181,16 +180,6 @@ endfunction
 "-----------------------------------------------------------------------------
 nmap sk :SplitjoinSplit<cr>
 nmap sj :SplitjoinJoin<cr>
-"-----------------------------------------------------------------------------
-" Svndiff Plugin Settings
-"-----------------------------------------------------------------------------
-noremap <F3> :call Svndiff("prev")<CR>
-noremap <F5> :GundoToggle<CR>
-noremap <F6> :call Svndiff("clear")<CR>
-hi DiffAdd      ctermfg=0 ctermbg=2 guibg='green'
-hi DiffDelete   ctermfg=0 ctermbg=1 guibg='red'
-hi DiffChange   ctermfg=0 ctermbg=3 guibg='yellow'
-let g:svndiff_autoupdate = 1
 "-----------------------------------------------------------------------------
 " Airline Variables
 "-----------------------------------------------------------------------------
