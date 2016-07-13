@@ -110,6 +110,12 @@ Plug 'tpope/vim-fugitive'
 Plug 'christoomey/vim-tmux-runner'
 call plug#end()
 "-----------------------------------------------------------------------------
+"-----------------------------------------------------------------------------
+" PyTest Plugin Settings
+"-----------------------------------------------------------------------------
+nmap <silent><Leader>ff <Esc>:Pytest file<CR>
+nmap <silent><Leader>fc <Esc>:Pytest class<CR>
+nmap <silent><Leader>fm <Esc>:Pytest method<CR>
 " NERD Tree Plugin Settings
 "-----------------------------------------------------------------------------
 " Toggle the NERD Tree on an off with F7
