@@ -3,6 +3,7 @@
 	name = jrhoads
 [core]
 	autocrlf = input
+	editor = vim
 [http]
 	postBuffer = 524288000
 [color]
@@ -14,3 +15,7 @@
 	lg = log --oneline --decorate --all --graph
 [push]
 	default = simple
+[diff]
+	tool = vimdiff
+[merge]
+	tool = vimdiff
