@@ -9,6 +9,7 @@ set cursorline
 set hidden
 set rnu
 set number
+set visualbell
 set listchars=tab:│·,trail:·,eol:¬
 "-----------------------------------------------------------------------------
 " LEADER REMAPPING
@@ -138,6 +139,10 @@ vnoremap <F1> <ESC>
 "-----------------------------------------------------------------------------
 " Search with Ag (the silver sercher)
 let g:ackprg = 'ag --nogroup --column'
+cnoreabbrev ag Ack
+cnoreabbrev aG Ack
+cnoreabbrev Ag Ack
+cnoreabbrev AG Ack
 " Find the word under the cursor
 nmap <Leader>fw :Ack<space><C-R><C-W><CR>
 " Toggle List Characters
