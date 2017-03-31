@@ -6,6 +6,7 @@
     ~/.bash_logout: bash_logout
     ~/.bash_aliases: bash_aliases
     ~/.gitconfig: gitconfig
+    ~/.git-prompt.sh: git-prompt.sh
     ~/.tmux.conf: tmux.conf
     ~/.vimrc: vimrc
     ~/.vim: vim
