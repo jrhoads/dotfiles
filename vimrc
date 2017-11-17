@@ -20,9 +20,7 @@ let mapleader = ","
 "-----------------------------------------------------------------------------
 call plug#begin('~/.vim/plugged')
 "# Colors
-Plug 'sjl/badwolf'
-Plug 'https://github.com/twerth/ir_black.git'
-Plug 'https://github.com/vim-scripts/molokai.git'
+Plug 'morhetz/gruvbox'
 "# Langs
 Plug 'https://github.com/ajf/puppet-vim.git'
 Plug 'https://github.com/cakebaker/scss-syntax.vim.git'
@@ -62,7 +60,6 @@ Plug 'https://github.com/alfredodeza/pytest.vim.git'
 Plug 'https://github.com/ap/vim-css-color.git'
 Plug 'https://github.com/bronson/vim-trailing-whitespace.git'
 Plug 'https://github.com/chrisbra/NrrwRgn.git'
-Plug 'https://github.com/edsono/vim-matchit.git'
 Plug 'https://github.com/ervandew/supertab.git'
 Plug 'https://github.com/garbas/vim-snipmate.git'
 Plug 'https://github.com/honza/vim-snippets.git'
@@ -76,7 +73,6 @@ Plug 'https://github.com/nvie/vim-flake8.git'
 Plug 'https://github.com/rgarver/Kwbd.vim.git'
 Plug 'https://github.com/scrooloose/nerdcommenter.git'
 Plug 'https://github.com/scrooloose/nerdtree.git'
-Plug 'https://github.com/scrooloose/syntastic.git'
 Plug 'https://github.com/sjl/gundo.vim.git'
 Plug 'https://github.com/skalnik/vim-vroom.git'
 Plug 'https://github.com/terryma/vim-multiple-cursors.git'
@@ -93,7 +89,8 @@ Plug 'tpope/vim-dispatch'
 Plug 'tpope/vim-endwise'
 Plug 'tpope/vim-eunuch'
 Plug 'tpope/vim-fugitive'
-Plug 'christoomey/vim-tmux-runner'
+Plug 'w0rp/ale'
+"Plug 'https://github.com/scrooloose/syntastic.git'
 call plug#end()
 "-----------------------------------------------------------------------------
 " Navigate through windows and buffers with the leader
@@ -145,6 +142,8 @@ cnoreabbrev Ag Ack
 cnoreabbrev AG Ack
 " Find the word under the cursor
 nmap <Leader>fw :Ack<space><C-R><C-W><CR>
+" Highlight search
+set hlsearch
 " Toggle List Characters
 nmap <leader>l :set list!<CR>
 " Toggle Folding
@@ -168,9 +167,9 @@ function SetPythonOptions()
     set expandtab
     set autoindent
     set fileformat=unix
+    nnoremap <LocalLeader>= :0,$!yapf<CR>
 endfunction
 
-au BufNewFile,BufRead *.js,*.html,*.css,*.scss: call SetWebOptions()
 function SetWebOptions()
     set tabstop=2
     set softtabstop=2
@@ -180,6 +179,7 @@ function SetWebOptions()
     set autoindent
     set fileformat=unix
 endfunction
+au BufNewFile,BufRead *.js,*.html,*.css,*.scss,*.sass: call SetWebOptions()
 "-----------------------------------------------------------------------------
 " SplitJoin Plugin Settings
 "-----------------------------------------------------------------------------
@@ -233,9 +233,14 @@ iab Allignment Alignment
 "-----------------------------------------------------------------------------
 " Colorscheme
 "-----------------------------------------------------------------------------
-colorscheme badwolf
+colorscheme default
 set colorcolumn=80
 "-----------------------------------------------------------------------------
 " Vim Tmux Runner
 "-----------------------------------------------------------------------------
 let g:VtrUseVtrMaps = 1
+"-----------------------------------------------------------------------------
+" XML settings
+"-----------------------------------------------------------------------------
+let g:xml_syntax_folding=1
+au FileType xml setlocal foldmethod=syntax
