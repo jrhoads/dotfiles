@@ -13,6 +13,8 @@
 	br = branch
 	s = status -s
 	lg = log --oneline --decorate --all --graph
+	praise = blame
+	wd = diff --word-diff
 [push]
 	default = simple
 [diff]
