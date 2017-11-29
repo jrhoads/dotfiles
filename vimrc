@@ -22,26 +22,17 @@ call plug#begin('~/.vim/plugged')
 "# Colors
 Plug 'morhetz/gruvbox'
 "# Langs
-Plug 'https://github.com/ajf/puppet-vim.git'
 Plug 'https://github.com/cakebaker/scss-syntax.vim.git'
 Plug 'https://github.com/chrisbra/csv.vim.git'
-Plug 'https://github.com/depuracao/vim-rdoc.git'
-Plug 'https://github.com/elixir-lang/vim-elixir.git'
 Plug 'https://github.com/elzr/vim-json.git'
 Plug 'https://github.com/fatih/vim-go.git'
 Plug 'https://github.com/groenewege/vim-less.git'
-Plug 'https://github.com/guns/vim-clojure-static.git'
 Plug 'https://github.com/jimenezrick/vimerl.git'
-Plug 'https://github.com/kchmck/vim-coffee-script.git'
 Plug 'https://github.com/mmalecki/vim-node.js.git'
 Plug 'https://github.com/mustache/vim-mustache-handlebars.git'
 Plug 'https://github.com/pangloss/vim-javascript.git'
-Plug 'https://github.com/rosstimson/scala-vim-support.git'
-Plug 'https://github.com/skwp/vim-rspec.git'
 Plug 'https://github.com/slim-template/vim-slim.git'
-Plug 'https://github.com/sunaku/vim-ruby-minitest.git'
 Plug 'https://github.com/timcharper/textile.vim.git'
-Plug 'https://github.com/tpope/vim-cucumber.git'
 Plug 'https://github.com/tpope/vim-git.git'
 Plug 'https://github.com/tpope/vim-haml.git'
 Plug 'https://github.com/tpope/vim-liquid.git'
@@ -50,9 +41,6 @@ Plug 'https://github.com/tpope/vim-rails.git'
 Plug 'https://github.com/vim-ruby/vim-ruby.git'
 Plug 'https://github.com/wlangstroth/vim-haskell.git'
 "# Tools
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
-Plug 'easymotion/vim-easymotion'
 Plug 'tomtom/tlib_vim'
 Plug 'https://github.com/MarcWeber/vim-addon-mw-utils.git'
 Plug 'https://github.com/airblade/vim-gitgutter.git'
@@ -66,19 +54,15 @@ Plug 'https://github.com/honza/vim-snippets.git'
 Plug 'https://github.com/itspriddle/ZoomWin.git'
 Plug 'https://github.com/jeetsukumaran/vim-buffergator.git'
 Plug 'https://github.com/majutsushi/tagbar.git'
-Plug 'https://github.com/mattn/gist-vim.git'
-Plug 'https://github.com/mattn/webapi-vim.git'
 Plug 'https://github.com/michaeljsmith/vim-indent-object.git'
 Plug 'https://github.com/nvie/vim-flake8.git'
-Plug 'https://github.com/rgarver/Kwbd.vim.git'
+"Plug 'https://github.com/rgarver/Kwbd.vim.git'
 Plug 'https://github.com/scrooloose/nerdcommenter.git'
 Plug 'https://github.com/scrooloose/nerdtree.git'
 Plug 'https://github.com/sjl/gundo.vim.git'
-Plug 'https://github.com/skalnik/vim-vroom.git'
 Plug 'https://github.com/terryma/vim-multiple-cursors.git'
 Plug 'https://github.com/thinca/vim-visualstar.git'
 Plug 'https://github.com/tmhedberg/SimpylFold.git'
-Plug 'https://github.com/vim-scripts/vimwiki.git'
 Plug 'kien/ctrlp.vim'
 Plug 'mileszs/ack.vim'
 Plug 'tpope/vim-repeat'
@@ -95,8 +79,6 @@ call plug#end()
 "-----------------------------------------------------------------------------
 " Navigate through windows and buffers with the leader
 "-----------------------------------------------------------------------------
-map <Leader>[ <C-W>W
-map <Leader>] <C-W>w
 map <Leader><TAB> <C-W>W
 map <Leader><Space> :bn<cr>
 map <Leader><S-Space> :bp<cr>
@@ -235,10 +217,6 @@ iab Allignment Alignment
 "-----------------------------------------------------------------------------
 colorscheme default
 set colorcolumn=80
-"-----------------------------------------------------------------------------
-" Vim Tmux Runner
-"-----------------------------------------------------------------------------
-let g:VtrUseVtrMaps = 1
 "-----------------------------------------------------------------------------
 " XML settings
 "-----------------------------------------------------------------------------
