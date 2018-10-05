@@ -19,28 +19,25 @@ let mapleader = ","
 " Install Plugins
 "-----------------------------------------------------------------------------
 call plug#begin('~/.vim/plugged')
-"# Colors
-Plug 'morhetz/gruvbox'
+
 "# Langs
+Plug 'posva/vim-vue'
 Plug 'https://github.com/cakebaker/scss-syntax.vim.git'
 Plug 'https://github.com/chrisbra/csv.vim.git'
 Plug 'https://github.com/elzr/vim-json.git'
 Plug 'https://github.com/fatih/vim-go.git'
-Plug 'https://github.com/groenewege/vim-less.git'
-Plug 'https://github.com/jimenezrick/vimerl.git'
 Plug 'https://github.com/mmalecki/vim-node.js.git'
 Plug 'https://github.com/mustache/vim-mustache-handlebars.git'
 Plug 'https://github.com/pangloss/vim-javascript.git'
-Plug 'https://github.com/slim-template/vim-slim.git'
 Plug 'https://github.com/timcharper/textile.vim.git'
 Plug 'https://github.com/tpope/vim-git.git'
-Plug 'https://github.com/tpope/vim-haml.git'
-Plug 'https://github.com/tpope/vim-liquid.git'
 Plug 'https://github.com/tpope/vim-markdown.git'
-Plug 'https://github.com/tpope/vim-rails.git'
 Plug 'https://github.com/vim-ruby/vim-ruby.git'
-Plug 'https://github.com/wlangstroth/vim-haskell.git'
+
 "# Tools
+
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 Plug 'tomtom/tlib_vim'
 Plug 'https://github.com/MarcWeber/vim-addon-mw-utils.git'
 Plug 'https://github.com/airblade/vim-gitgutter.git'
@@ -56,7 +53,6 @@ Plug 'https://github.com/jeetsukumaran/vim-buffergator.git'
 Plug 'https://github.com/majutsushi/tagbar.git'
 Plug 'https://github.com/michaeljsmith/vim-indent-object.git'
 Plug 'https://github.com/nvie/vim-flake8.git'
-"Plug 'https://github.com/rgarver/Kwbd.vim.git'
 Plug 'https://github.com/scrooloose/nerdcommenter.git'
 Plug 'https://github.com/scrooloose/nerdtree.git'
 Plug 'https://github.com/sjl/gundo.vim.git'
@@ -74,7 +70,8 @@ Plug 'tpope/vim-endwise'
 Plug 'tpope/vim-eunuch'
 Plug 'tpope/vim-fugitive'
 Plug 'w0rp/ale'
-"Plug 'https://github.com/scrooloose/syntastic.git'
+Plug 'maralla/completor.vim'
+Plug 'AndrewRadev/splitjoin.vim'
 call plug#end()
 "-----------------------------------------------------------------------------
 " Navigate through windows and buffers with the leader
@@ -145,7 +142,6 @@ function SetPythonOptions()
     set tabstop=4
     set softtabstop=4
     set shiftwidth=4
-    set textwidth=79
     set expandtab
     set autoindent
     set fileformat=unix
@@ -156,12 +152,14 @@ function SetWebOptions()
     set tabstop=2
     set softtabstop=2
     set shiftwidth=2
-    set textwidth=79
     set expandtab
     set autoindent
     set fileformat=unix
+    highlight htmlArg cterm=italic
+    highlight htmlArg gui=italic
 endfunction
 au BufNewFile,BufRead *.js,*.html,*.css,*.scss,*.sass: call SetWebOptions()
+au BufNewFile,BufRead *.html set filetype=htmldjango
 "-----------------------------------------------------------------------------
 " SplitJoin Plugin Settings
 "-----------------------------------------------------------------------------
@@ -222,3 +220,8 @@ set colorcolumn=80
 "-----------------------------------------------------------------------------
 let g:xml_syntax_folding=1
 au FileType xml setlocal foldmethod=syntax
+
+"Enable Italics in Comments
+highlight Comment cterm=italic
+"set t_ZH=^[[3m
+"set t_ZR=^[[23m
