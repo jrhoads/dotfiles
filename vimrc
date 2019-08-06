@@ -11,6 +11,9 @@ set rnu
 set number
 set visualbell
 set listchars=tab:│·,trail:·,eol:¬
+set smartcase
+set ignorecase
+set lazyredraw
 "-----------------------------------------------------------------------------
 " LEADER REMAPPING
 "-----------------------------------------------------------------------------
@@ -21,42 +24,23 @@ let mapleader = ","
 call plug#begin('~/.vim/plugged')
 
 "# Langs
-Plug 'posva/vim-vue'
-Plug 'https://github.com/cakebaker/scss-syntax.vim.git'
-Plug 'https://github.com/chrisbra/csv.vim.git'
-Plug 'https://github.com/elzr/vim-json.git'
-Plug 'https://github.com/fatih/vim-go.git'
-Plug 'https://github.com/mmalecki/vim-node.js.git'
-Plug 'https://github.com/mustache/vim-mustache-handlebars.git'
-Plug 'https://github.com/pangloss/vim-javascript.git'
-Plug 'https://github.com/timcharper/textile.vim.git'
-Plug 'https://github.com/tpope/vim-git.git'
-Plug 'https://github.com/tpope/vim-markdown.git'
-Plug 'https://github.com/vim-ruby/vim-ruby.git'
-
+Plug 'sheerun/vim-polyglot'
 "# Tools
 
 Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
 Plug 'tomtom/tlib_vim'
 Plug 'https://github.com/MarcWeber/vim-addon-mw-utils.git'
 Plug 'https://github.com/airblade/vim-gitgutter.git'
 Plug 'https://github.com/alfredodeza/pytest.vim.git'
 Plug 'https://github.com/ap/vim-css-color.git'
 Plug 'https://github.com/bronson/vim-trailing-whitespace.git'
-Plug 'https://github.com/chrisbra/NrrwRgn.git'
 Plug 'https://github.com/ervandew/supertab.git'
 Plug 'https://github.com/garbas/vim-snipmate.git'
 Plug 'https://github.com/honza/vim-snippets.git'
-Plug 'https://github.com/itspriddle/ZoomWin.git'
 Plug 'https://github.com/jeetsukumaran/vim-buffergator.git'
 Plug 'https://github.com/majutsushi/tagbar.git'
-Plug 'https://github.com/michaeljsmith/vim-indent-object.git'
-Plug 'https://github.com/nvie/vim-flake8.git'
 Plug 'https://github.com/scrooloose/nerdcommenter.git'
 Plug 'https://github.com/scrooloose/nerdtree.git'
-Plug 'https://github.com/sjl/gundo.vim.git'
-Plug 'https://github.com/terryma/vim-multiple-cursors.git'
 Plug 'https://github.com/thinca/vim-visualstar.git'
 Plug 'https://github.com/tmhedberg/SimpylFold.git'
 Plug 'kien/ctrlp.vim'
@@ -72,6 +56,7 @@ Plug 'tpope/vim-fugitive'
 Plug 'w0rp/ale'
 Plug 'maralla/completor.vim'
 Plug 'AndrewRadev/splitjoin.vim'
+Plug 'ap/vim-buftabline'
 call plug#end()
 "-----------------------------------------------------------------------------
 " Navigate through windows and buffers with the leader
@@ -93,7 +78,7 @@ nmap <silent><Leader>fm <Esc>:Pytest method<CR>
 "-----------------------------------------------------------------------------
 " NERD Tree Plugin Settings
 "-----------------------------------------------------------------------------
-" Toggle the NERD Tree on an off with F7
+" Toggle the NERD Tree on an off with F6
 nmap <F6> :NERDTreeToggle<CR>
 let NERDTreeIgnore=[ '\.ncb$', '\.suo$', '\.vcproj\.RIMNET', '\.obj$',
             \ '\.ilk$', '^BuildLog.htm$', '\.pdb$', '\.idb$',
