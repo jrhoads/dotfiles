@@ -9,11 +9,14 @@ set cursorline
 set hidden
 set rnu
 set number
+set ruler
+set numberwidth=5
 set visualbell
 set listchars=tab:│·,trail:·,eol:¬
 set smartcase
 set ignorecase
 set lazyredraw
+set laststatus=2
 "-----------------------------------------------------------------------------
 " LEADER REMAPPING
 "-----------------------------------------------------------------------------
@@ -22,11 +25,10 @@ let mapleader = ","
 " Install Plugins
 "-----------------------------------------------------------------------------
 call plug#begin('~/.vim/plugged')
-
 "# Langs
 Plug 'sheerun/vim-polyglot'
-"# Tools
 
+"# Tools
 Plug 'vim-airline/vim-airline'
 Plug 'tomtom/tlib_vim'
 Plug 'https://github.com/MarcWeber/vim-addon-mw-utils.git'
@@ -64,6 +66,7 @@ call plug#end()
 map <Leader><TAB> <C-W>W
 map <Leader><Space> :bn<cr>
 map <Leader><S-Space> :bp<cr>
+map <Leader><Leader> <C-^>
 "-----------------------------------------------------------------------------
 " Split Preferences
 "-----------------------------------------------------------------------------
@@ -106,6 +109,11 @@ cnoreabbrev Ag Ack
 cnoreabbrev AG Ack
 " Find the word under the cursor
 nmap <Leader>fw :Ack<space><C-R><C-W><CR>
+" Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
+let g:ctrlp_user_command = 'ag --literal --files-with-matches --nocolor --hidden -g "" %s'
+" ag is fast enough that CtrlP doesn't need to cache
+let g:ctrlp_use_caching = 0
+nnoremap \ :Ack<SPACE>
 " Highlight search
 set hlsearch
 " Toggle List Characters
@@ -199,14 +207,22 @@ iab Allignment Alignment
 " Colorscheme
 "-----------------------------------------------------------------------------
 colorscheme default
-set colorcolumn=80
+set colorcolumn=81
 "-----------------------------------------------------------------------------
 " XML settings
 "-----------------------------------------------------------------------------
 let g:xml_syntax_folding=1
 au FileType xml setlocal foldmethod=syntax
+" Treat <li> and <p> tags like the block tags they are
+let g:html_indent_tags = 'li\|p'
 
 "Enable Italics in Comments
 highlight Comment cterm=italic
 "set t_ZH=^[[3m
 "set t_ZR=^[[23m
+"-----------------------------------------------------------------------------
+" Local config
+"-----------------------------------------------------------------------------
+if filereadable($HOME . "/.vimrc.local")
+  source ~/.vimrc.local
+endif
