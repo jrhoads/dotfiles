@@ -1,7 +1,7 @@
 "-----------------------------------------------------------------------------
 " Base Setup
 "-----------------------------------------------------------------------------
-set encoding=utf-8
+set encoding=UTF-8
 set nobackup
 set nowritebackup
 set noswapfile
@@ -17,6 +17,7 @@ set smartcase
 set ignorecase
 set lazyredraw
 set laststatus=2
+
 "-----------------------------------------------------------------------------
 " LEADER REMAPPING
 "-----------------------------------------------------------------------------
@@ -45,7 +46,7 @@ Plug 'https://github.com/scrooloose/nerdcommenter.git'
 Plug 'https://github.com/scrooloose/nerdtree.git'
 Plug 'https://github.com/thinca/vim-visualstar.git'
 Plug 'https://github.com/tmhedberg/SimpylFold.git'
-Plug 'kien/ctrlp.vim'
+"Plug 'kien/ctrlp.vim'
 Plug 'mileszs/ack.vim'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-sensible'
@@ -55,10 +56,16 @@ Plug 'tpope/vim-dispatch'
 Plug 'tpope/vim-endwise'
 Plug 'tpope/vim-eunuch'
 Plug 'tpope/vim-fugitive'
-Plug 'w0rp/ale'
+Plug 'dense-analysis/ale'
 Plug 'maralla/completor.vim'
 Plug 'AndrewRadev/splitjoin.vim'
 Plug 'ap/vim-buftabline'
+"Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'junegunn/fzf'
+Plug 'junegunn/fzf.vim'
+Plug 'junegunn/limelight.vim'
+Plug 'junegunn/goyo.vim'
+Plug 'ryanoasis/vim-devicons'
 call plug#end()
 "-----------------------------------------------------------------------------
 " Navigate through windows and buffers with the leader
@@ -102,7 +109,7 @@ vnoremap <F1> <ESC>
 " Convenience
 "-----------------------------------------------------------------------------
 " Search with Ag (the silver sercher)
-let g:ackprg = 'ag --nogroup --column'
+let g:ackprg = 'ag --nogroup --nocolor --column'
 cnoreabbrev ag Ack
 cnoreabbrev aG Ack
 cnoreabbrev Ag Ack
@@ -110,9 +117,9 @@ cnoreabbrev AG Ack
 " Find the word under the cursor
 nmap <Leader>fw :Ack<space><C-R><C-W><CR>
 " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
-let g:ctrlp_user_command = 'ag --literal --files-with-matches --nocolor --hidden -g "" %s'
-" ag is fast enough that CtrlP doesn't need to cache
-let g:ctrlp_use_caching = 0
+"let g:ctrlp_user_command = 'ag --literal --files-with-matches --nocolor --hidden -g "" %s'
+"" ag is fast enough that CtrlP doesn't need to cache
+"let g:ctrlp_use_caching = 0
 nnoremap \ :Ack<SPACE>
 " Highlight search
 set hlsearch
@@ -215,6 +222,21 @@ let g:xml_syntax_folding=1
 au FileType xml setlocal foldmethod=syntax
 " Treat <li> and <p> tags like the block tags they are
 let g:html_indent_tags = 'li\|p'
+"-----------------------------------------------------------------------------
+" GOYO settings
+"-----------------------------------------------------------------------------
+nnoremap <Leader>gy :Goyo<CR>
+autocmd! User GoyoEnter Limelight
+autocmd! User GoyoLeave Limelight!
+
+"-----------------------------------------------------------------------------
+" Limelight settings
+"-----------------------------------------------------------------------------
+let g:limelight_conceal_ctermfg = 'gray'
+
+"Enable moving by visible lines
+nnoremap <Leader>gg :nnoremap j gj<CR>:nnoremap k gk<CR>
+nnoremap <Leader>gx :nunmap j<CR>:nunmap k<CR>
 
 "Enable Italics in Comments
 highlight Comment cterm=italic
