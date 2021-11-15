@@ -148,6 +148,17 @@ function SetPythonOptions()
     nnoremap <LocalLeader>= :0,$!yapf<CR>
 endfunction
 
+au BufNewFile,BufRead *.rb call SetRubyOptions()
+function SetRubyOptions()
+    set tabstop=4
+    set softtabstop=4
+    set shiftwidth=4
+    set expandtab
+    set autoindent
+    set fileformat=unix
+    nnoremap <silent><Leader>ff <Esc>:!bundle exec rspec<CR>
+endfunction
+
 function SetWebOptions()
     set tabstop=2
     set softtabstop=2
@@ -172,8 +183,9 @@ let g:airline_powerline_fonts = 1
 "-----------------------------------------------------------------------------
 " Snipmate variables
 "-----------------------------------------------------------------------------
+let g:snipMate = { 'snippet_version' : 1 }
 let g:snips_author = 'Joseph Rhoads'
-let g:snips_email = 'joseph_rhoads@brown.edu'
+let g:snips_email = 'jrhoads@datacite.org'
 let g:snips_github = 'jrhoads'
 "-----------------------------------------------------------------------------
 "" Fix constant spelling mistakes
