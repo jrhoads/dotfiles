@@ -12,7 +12,7 @@
 	co = checkout
 	br = branch
 	s = status -s
-	lg = log --oneline --decorate --all --graph
+	lg = log --oneline --abbrev-commit --decorate --all --graph --color
 	praise = blame
 	wd = diff --word-diff
 [push]
