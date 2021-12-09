@@ -134,8 +134,18 @@ inoremap jj <Esc>
 inoremap jk <Esc>
 inoremap kj <Esc>
 inoremap kk <Esc>
-" When saving py files, delete trailing whitespace
-au BufWritePre *.py :%s/\s\+$//e
+" Delete trailing white space on save, useful for some filetypes ;)
+function CleanExtraSpaces()
+    let save_cursor = getpos(".")
+    let old_query = getreg('/')
+    silent! %s/\s\+$//e
+    call setpos('.', save_cursor)
+    call setreg('/', old_query)
+endfun
+
+" When saving files, delete trailing whitespace
+au BufWritePre *txt,*.json,*.ts,*.js,*.wiki,*.sh,*.rb,*.coffee,*.py: call CleanExtraSpaces()
+
 " When workign with python files use the following options
 au BufNewFile,BufRead *.py call SetPythonOptions()
 function SetPythonOptions()
@@ -169,6 +179,7 @@ function SetWebOptions()
     highlight htmlArg cterm=italic
     highlight htmlArg gui=italic
 endfunction
+
 au BufNewFile,BufRead *.js,*.html,*.css,*.scss,*.sass: call SetWebOptions()
 au BufNewFile,BufRead *.html set filetype=htmldjango
 "-----------------------------------------------------------------------------
