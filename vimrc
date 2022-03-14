@@ -26,8 +26,14 @@ let mapleader = ","
 " Install Plugins
 "-----------------------------------------------------------------------------
 call plug#begin('~/.vim/plugged')
+"# Colorscheme
+Plug 'shaond/vim-guru'
+Plug 'NLKNguyen/papercolor-theme'
 "# Langs
 Plug 'sheerun/vim-polyglot'
+Plug 'leafgarland/typescript-vim'
+Plug 'peitalin/vim-jsx-typescript'
+Plug 'jparise/vim-graphql'
 
 "# Tools
 Plug 'vim-airline/vim-airline'
@@ -38,15 +44,16 @@ Plug 'https://github.com/alfredodeza/pytest.vim.git'
 Plug 'https://github.com/ap/vim-css-color.git'
 Plug 'https://github.com/bronson/vim-trailing-whitespace.git'
 Plug 'https://github.com/ervandew/supertab.git'
-Plug 'https://github.com/garbas/vim-snipmate.git'
+Plug 'SirVer/ultisnips'
 Plug 'https://github.com/honza/vim-snippets.git'
+Plug 'mlaursen/vim-react-snippets'
+Plug 'cristianoliveira/vim-react-html-snippets'
 Plug 'https://github.com/jeetsukumaran/vim-buffergator.git'
 Plug 'https://github.com/majutsushi/tagbar.git'
 Plug 'https://github.com/scrooloose/nerdcommenter.git'
 Plug 'https://github.com/scrooloose/nerdtree.git'
 Plug 'https://github.com/thinca/vim-visualstar.git'
 Plug 'https://github.com/tmhedberg/SimpylFold.git'
-"Plug 'kien/ctrlp.vim'
 Plug 'mileszs/ack.vim'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-sensible'
@@ -58,13 +65,16 @@ Plug 'tpope/vim-eunuch'
 Plug 'tpope/vim-fugitive'
 Plug 'dense-analysis/ale'
 Plug 'maralla/completor.vim'
+Plug 'maralla/completor-typescript'
 Plug 'AndrewRadev/splitjoin.vim'
 Plug 'ap/vim-buftabline'
-"Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
 Plug 'junegunn/limelight.vim'
 Plug 'junegunn/goyo.vim'
+Plug 'junegunn/gv.vim'
+Plug 'junegunn/vim-slash'
+Plug 'junegunn/vim-journal'
 Plug 'ryanoasis/vim-devicons'
 call plug#end()
 "-----------------------------------------------------------------------------
@@ -72,8 +82,7 @@ call plug#end()
 "-----------------------------------------------------------------------------
 map <Leader><TAB> <C-W>W
 map <Leader><Space> :bn<cr>
-map <Leader><S-Space> :bp<cr>
-map <Leader><Leader> <C-^>
+map <Leader><Leader> :bp<cr>
 "-----------------------------------------------------------------------------
 " Split Preferences
 "-----------------------------------------------------------------------------
@@ -95,13 +104,8 @@ let NERDTreeIgnore=[ '\.ncb$', '\.suo$', '\.vcproj\.RIMNET', '\.obj$',
             \ '\.embed\.manifest$', '\.embed\.manifest.res$',
             \ '\.intermediate\.manifest$', '^mt.dep$' ]
 " Toggle Tagbar with F9
-nnoremap <silent> <F9> :TagbarToggle<CR>.
-"-----------------------------------------------------------------------------
-" Annoyances
-"-----------------------------------------------------------------------------
-" Fix for accidentally typing in capital W to save.  Saves it anyway
-cnoreabbrev <expr> W ((getcmdtype() is# ':' && getcmdline() is# 'W')?('w'):('W'))
-" F1 no longer opens help
+nmap <F9> :TagbarToggle<CR>
+nmap <Leader>t :TagbarToggle<CR>
 inoremap <F1> <ESC>
 nnoremap <F1> <ESC>
 vnoremap <F1> <ESC>
@@ -116,10 +120,6 @@ cnoreabbrev Ag Ack
 cnoreabbrev AG Ack
 " Find the word under the cursor
 nmap <Leader>fw :Ack<space><C-R><C-W><CR>
-" Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
-"let g:ctrlp_user_command = 'ag --literal --files-with-matches --nocolor --hidden -g "" %s'
-"" ag is fast enough that CtrlP doesn't need to cache
-"let g:ctrlp_use_caching = 0
 nnoremap \ :Ack<SPACE>
 " Highlight search
 set hlsearch
@@ -236,7 +236,8 @@ iab Allignment Alignment
 "-----------------------------------------------------------------------------
 " Colorscheme
 "-----------------------------------------------------------------------------
-colorscheme default
+set background=dark
+colorscheme PaperColor
 set colorcolumn=81
 "-----------------------------------------------------------------------------
 " XML settings
@@ -271,3 +272,7 @@ highlight Comment cterm=italic
 if filereadable($HOME . "/.vimrc.local")
   source ~/.vimrc.local
 endif
+
+"Move increment so it doesn't conflict with tmux
+:nnoremap <A-a> <C-a>
+:nnoremap <A-x> <C-x>
