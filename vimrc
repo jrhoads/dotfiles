@@ -80,9 +80,11 @@ call plug#end()
 "-----------------------------------------------------------------------------
 " Navigate through windows and buffers with the leader
 "-----------------------------------------------------------------------------
-map <Leader><TAB> <C-W>W
-map <Leader><Space> :bn<cr>
-map <Leader><Leader> :bp<cr>
+let g:buffergator_suppress_keymaps = 1
+nnoremap <silent> <Leader><TAB> <C-W>W
+nnoremap <silent> <Leader><Space> :bn<cr>
+nnoremap <silent> <Leader><Leader> :bp<cr>
+nnoremap <silent> <Leader>b :BuffergatorToggle<cr>
 "-----------------------------------------------------------------------------
 " Split Preferences
 "-----------------------------------------------------------------------------
