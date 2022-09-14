@@ -51,7 +51,6 @@ Plug 'cristianoliveira/vim-react-html-snippets'
 Plug 'https://github.com/jeetsukumaran/vim-buffergator.git'
 Plug 'https://github.com/majutsushi/tagbar.git'
 Plug 'https://github.com/scrooloose/nerdcommenter.git'
-Plug 'https://github.com/scrooloose/nerdtree.git'
 Plug 'https://github.com/thinca/vim-visualstar.git'
 Plug 'https://github.com/tmhedberg/SimpylFold.git'
 Plug 'mileszs/ack.vim'
@@ -111,23 +110,15 @@ nmap <silent><Leader>tf :TestFile<CR>
 nmap <silent><Leader>ts :TestSuite<CR>
 nmap <silent><Leader>tm :TestNearest<CR>
 "-----------------------------------------------------------------------------
-" NERD Tree Plugin Settings
-"-----------------------------------------------------------------------------
-" Toggle the NERD Tree on an off with F6
-"nmap <F6> :NERDTreeToggle<CR>
-let NERDTreeIgnore=[ '\.ncb$', '\.suo$', '\.vcproj\.RIMNET', '\.obj$',
-            \ '\.ilk$', '^BuildLog.htm$', '\.pdb$', '\.idb$',
-            \ '\.embed\.manifest$', '\.embed\.manifest.res$',
-            \ '\.intermediate\.manifest$', '^mt.dep$' ]
 " Toggle Tagbar with F9
 nmap <F9> :TagbarToggle<CR>
 nmap <Leader>g :TagbarToggle<CR>
-inoremap <F1> <ESC>
-nnoremap <F1> <ESC>
-vnoremap <F1> <ESC>
 "-----------------------------------------------------------------------------
 " Convenience
 "-----------------------------------------------------------------------------
+inoremap <F1> <ESC>
+nnoremap <F1> <ESC>
+vnoremap <F1> <ESC>
 " Search with Ag (the silver sercher)
 let g:ackprg = 'ag --nogroup --nocolor --column'
 cnoreabbrev ag Ack
