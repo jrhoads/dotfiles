@@ -51,7 +51,6 @@ Plug 'cristianoliveira/vim-react-html-snippets'
 Plug 'https://github.com/jeetsukumaran/vim-buffergator.git'
 Plug 'https://github.com/majutsushi/tagbar.git'
 Plug 'https://github.com/scrooloose/nerdcommenter.git'
-Plug 'https://github.com/scrooloose/nerdtree.git'
 Plug 'https://github.com/thinca/vim-visualstar.git'
 Plug 'https://github.com/tmhedberg/SimpylFold.git'
 Plug 'mileszs/ack.vim'
@@ -76,12 +75,26 @@ Plug 'junegunn/gv.vim'
 Plug 'junegunn/vim-slash'
 Plug 'junegunn/vim-journal'
 Plug 'ryanoasis/vim-devicons'
+
+"# Try out
+Plug 'vim-test/vim-test'
+Plug 'preservim/vimux'
+Plug 'blindFS/vim-taskwarrior'
+Plug 'airblade/vim-rooter'
+Plug 'voldikss/vim-floaterm'
+Plug 'lambdalisue/fern.vim'
+Plug 'lambdalisue/fern-git-status.vim'
+Plug 'lambdalisue/nerdfont.vim'
+Plug 'lambdalisue/fern-renderer-nerdfont.vim'
+
 call plug#end()
 "-----------------------------------------------------------------------------
 " Navigate through windows and buffers with the leader
 "-----------------------------------------------------------------------------
 let g:buffergator_suppress_keymaps = 1
 nnoremap <silent> <Leader><TAB> <C-W>W
+nnoremap <silent> <Leader><S-TAB> <C-W>p
+nnoremap <silent> <S-TAB> <C-W>w
 nnoremap <silent> <Leader><Space> :bn<cr>
 nnoremap <silent> <Leader><Leader> :bp<cr>
 nnoremap <silent> <Leader>b :BuffergatorToggle<cr>
@@ -91,29 +104,21 @@ nnoremap <silent> <Leader>b :BuffergatorToggle<cr>
 set splitbelow
 set splitright
 "-----------------------------------------------------------------------------
-" PyTest Plugin Settings
+" VimTest Plugin Settings
 "-----------------------------------------------------------------------------
-nmap <silent><Leader>ff <Esc>:Pytest file<CR>
-nmap <silent><Leader>fc <Esc>:Pytest class<CR>
-nmap <silent><Leader>fm <Esc>:Pytest method<CR>
+nmap <silent><Leader>tf :TestFile<CR>
+nmap <silent><Leader>ts :TestSuite<CR>
+nmap <silent><Leader>tm :TestNearest<CR>
 "-----------------------------------------------------------------------------
-" NERD Tree Plugin Settings
-"-----------------------------------------------------------------------------
-" Toggle the NERD Tree on an off with F6
-nmap <F6> :NERDTreeToggle<CR>
-let NERDTreeIgnore=[ '\.ncb$', '\.suo$', '\.vcproj\.RIMNET', '\.obj$',
-            \ '\.ilk$', '^BuildLog.htm$', '\.pdb$', '\.idb$',
-            \ '\.embed\.manifest$', '\.embed\.manifest.res$',
-            \ '\.intermediate\.manifest$', '^mt.dep$' ]
 " Toggle Tagbar with F9
 nmap <F9> :TagbarToggle<CR>
-nmap <Leader>t :TagbarToggle<CR>
-inoremap <F1> <ESC>
-nnoremap <F1> <ESC>
-vnoremap <F1> <ESC>
+nmap <Leader>g :TagbarToggle<CR>
 "-----------------------------------------------------------------------------
 " Convenience
 "-----------------------------------------------------------------------------
+inoremap <F1> <ESC>
+nnoremap <F1> <ESC>
+vnoremap <F1> <ESC>
 " Search with Ag (the silver sercher)
 let g:ackprg = 'ag --nogroup --nocolor --column'
 cnoreabbrev ag Ack
@@ -121,7 +126,7 @@ cnoreabbrev aG Ack
 cnoreabbrev Ag Ack
 cnoreabbrev AG Ack
 " Find the word under the cursor
-nmap <Leader>fw :Ack<space><C-R><C-W><CR>
+nmap <Leader>\ :Ack<space><C-R><C-W><CR>
 nnoremap \ :Ack<SPACE>
 " Highlight search
 set hlsearch
@@ -162,13 +167,12 @@ endfunction
 
 au BufNewFile,BufRead *.rb call SetRubyOptions()
 function SetRubyOptions()
-    set tabstop=4
-    set softtabstop=4
-    set shiftwidth=4
+    set tabstop=2
+    set softtabstop=2
+    set shiftwidth=2
     set expandtab
     set autoindent
     set fileformat=unix
-    nnoremap <silent><Leader>ff <Esc>:!bundle exec rspec<CR>
 endfunction
 
 function SetWebOptions()
@@ -235,6 +239,9 @@ iab collectoin collection
 iab Collectoin Collection
 iab allignment alignment
 iab Allignment Alignment
+iab refernce reference
+iab Refernce Reference
+
 "-----------------------------------------------------------------------------
 " Colorscheme
 "-----------------------------------------------------------------------------
@@ -278,3 +285,53 @@ endif
 "Move increment so it doesn't conflict with tmux
 :nnoremap <A-a> <C-a>
 :nnoremap <A-x> <C-x>
+
+"-----------------------------------------------------------------------------
+"Fern
+"-----------------------------------------------------------------------------
+"
+" Disable netrw.
+let g:loaded_netrw  = 1
+let g:loaded_netrwPlugin = 1
+let g:loaded_netrwSettings = 1
+let g:loaded_netrwFileHandlers = 1
+
+" Custom Settings and mappings
+nmap <F6> :Fern . -drawer -reveal=% -toggle<CR>
+nmap <leader>f :Fern . -drawer -reveal=% -toggle<CR>
+let g:fern#renderer = "nerdfont"
+function! s:init_fern() abort
+  echo "This function is called ON a fern buffer WHEN initialized"
+  nmap <buffer><expr>
+        \ <Plug>(fern-my-open-expand-collapse)
+        \ fern#smart#leaf(
+        \   "\<Plug>(fern-action-open)<C-w><C-p>",
+        \   "\<Plug>(fern-action-expand)",
+        \   "\<Plug>(fern-action-collapse)",
+        \ )
+  nmap <buffer><expr>
+        \ <Plug>(fern-my-expand-or-collapse)
+        \ fern#smart#leaf(
+        \   "\<Plug>(fern-action-collapse)",
+        \   "\<Plug>(fern-action-expand)",
+        \   "\<Plug>(fern-action-collapse)",
+        \ )
+
+  " Open node with 'o'
+  nmap <buffer> o <Plug>(fern-action-open)<C-w><C-p>
+  nmap <buffer> s <Plug>(fern-action-open:vsplit)<C-w><C-p>
+  nmap <buffer> ma <Plug>(fern-action-new-path)
+  nmap <buffer> r <Plug>(fern-action-reload)
+  nmap <buffer> q :<C-u>quit<CR>
+
+  nmap <buffer><nowait> H <Plug>(fern-action-leave)
+  nmap <buffer><nowait> L <Plug>(fern-action-enter)
+  nmap <buffer><nowait> <CR> <Plug>(fern-my-open-expand-collapse)
+
+  " Add any code to customize fern buffer
+endfunction
+
+augroup fern-custom
+  autocmd! *
+  autocmd FileType fern call s:init_fern()
+augroup END
