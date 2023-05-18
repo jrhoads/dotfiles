@@ -46,7 +46,7 @@ backup() {
     mkdir -p "$BACKUP_DIR"
 
     for file in $(get_linkables); do
-        filename=".$(basename "$file" '.symlink')"
+        filename="$(basename "$file" '.symlink')"
         target="$HOME/$filename"
         if [ -f "$target" ]; then
             echo "backing up $filename"
