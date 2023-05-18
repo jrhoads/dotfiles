@@ -189,7 +189,7 @@ function SetWebOptions()
 endfunction
 
 au BufNewFile,BufRead *.js,*.html,*.css,*.scss,*.sass: call SetWebOptions()
-au BufNewFile,BufRead *.html set filetype=htmldjango
+"au BufNewFile,BufRead *.html set filetype=htmldjango
 "-----------------------------------------------------------------------------
 " SplitJoin Plugin Settings
 "-----------------------------------------------------------------------------
