@@ -122,7 +122,7 @@ inoremap <F1> <ESC>
 nnoremap <F1> <ESC>
 vnoremap <F1> <ESC>
 " Search with Ag (the silver sercher)
-let g:ackprg = 'ag --nogroup --nocolor --column'
+let g:ackprg = 'ag --nogroup --nocolor --column -Q'
 cnoreabbrev ag Ack
 cnoreabbrev aG Ack
 cnoreabbrev Ag Ack
@@ -199,6 +199,13 @@ nmap sj :SplitjoinJoin<cr>
 " Airline Variables
 "-----------------------------------------------------------------------------
 let g:airline_powerline_fonts = 1
+let g:airline#extensions#ale#enabled = 1
+"-----------------------------------------------------------------------------
+" ALE variables
+"-----------------------------------------------------------------------------
+let g:ale_fixers = {
+\   '*': ['remove_trailing_lines', 'trim_whitespace'],
+\}
 "-----------------------------------------------------------------------------
 " Snipmate variables
 "-----------------------------------------------------------------------------
@@ -261,8 +268,7 @@ let g:html_indent_tags = 'li\|p'
 " GOYO settings
 "-----------------------------------------------------------------------------
 nnoremap <Leader>gy :Goyo<CR>
-autocmd! User GoyoEnter Limelight
-autocmd! User GoyoLeave Limelight!
+let g:goyo_width = 88
 
 "-----------------------------------------------------------------------------
 " Limelight settings
@@ -336,4 +342,5 @@ endfunction
 augroup fern-custom
   autocmd! *
   autocmd FileType fern call s:init_fern()
+  autocmd FileType fern setlocal norelativenumber | setlocal nonumber | call s:init_fern()
 augroup END
