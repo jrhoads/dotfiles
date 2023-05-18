@@ -1,6 +1,6 @@
 alias :q='exit'
-alias b="byobu"
 alias cat="rich"
+alias clock="tty-clock -nc"
 alias denv='conda deactivate'
 alias dc='docker compose'
 alias git="hub"
@@ -19,4 +19,8 @@ alias pipup='pip install -U pip'
 alias pss="python -m http.server"
 alias senv='conda activate ${PWD##**/}'
 alias ssh="ssh -q"
-alias tma='tmux attach-session -t remote &> /dev/null || tmux new-session -s remote'
+alias tma='tmux -u attach-session -t remote &> /dev/null || tmux -u new-session -s remote'
+alias vim='nvim'
+alias f='fd'
+function gi(){ git s ;}
+function gd(){ git diff $1 | dunk ;}

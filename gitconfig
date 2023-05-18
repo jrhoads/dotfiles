@@ -5,6 +5,7 @@
 	autocrlf = input
 	editor = vim
 	excludesfile = /home/jrhoads/.gitignore_global
+	pager = less -r
 [http]
 	postBuffer = 524288000
 [color]

@@ -29,11 +29,13 @@ call plug#begin('~/.vim/plugged')
 "# Colorscheme
 Plug 'shaond/vim-guru'
 Plug 'NLKNguyen/papercolor-theme'
+"
 "# Langs
 Plug 'sheerun/vim-polyglot'
 Plug 'leafgarland/typescript-vim'
 Plug 'peitalin/vim-jsx-typescript'
 Plug 'jparise/vim-graphql'
+Plug 'yasuhiroki/github-actions-yaml.vim'
 
 "# Tools
 Plug 'vim-airline/vim-airline'
@@ -42,12 +44,6 @@ Plug 'https://github.com/MarcWeber/vim-addon-mw-utils.git'
 Plug 'https://github.com/airblade/vim-gitgutter.git'
 Plug 'https://github.com/alfredodeza/pytest.vim.git'
 Plug 'https://github.com/ap/vim-css-color.git'
-Plug 'https://github.com/bronson/vim-trailing-whitespace.git'
-Plug 'https://github.com/ervandew/supertab.git'
-Plug 'SirVer/ultisnips'
-Plug 'https://github.com/honza/vim-snippets.git'
-Plug 'mlaursen/vim-react-snippets'
-Plug 'cristianoliveira/vim-react-html-snippets'
 Plug 'https://github.com/jeetsukumaran/vim-buffergator.git'
 Plug 'https://github.com/majutsushi/tagbar.git'
 Plug 'https://github.com/scrooloose/nerdcommenter.git'
@@ -63,8 +59,6 @@ Plug 'tpope/vim-endwise'
 Plug 'tpope/vim-eunuch'
 Plug 'tpope/vim-fugitive'
 Plug 'dense-analysis/ale'
-Plug 'maralla/completor.vim'
-Plug 'maralla/completor-typescript'
 Plug 'AndrewRadev/splitjoin.vim'
 Plug 'ap/vim-buftabline'
 Plug 'junegunn/fzf'
@@ -73,7 +67,6 @@ Plug 'junegunn/limelight.vim'
 Plug 'junegunn/goyo.vim'
 Plug 'junegunn/gv.vim'
 Plug 'junegunn/vim-slash'
-Plug 'junegunn/vim-journal'
 Plug 'ryanoasis/vim-devicons'
 
 "# Try out
@@ -86,7 +79,16 @@ Plug 'lambdalisue/fern.vim'
 Plug 'lambdalisue/fern-git-status.vim'
 Plug 'lambdalisue/nerdfont.vim'
 Plug 'lambdalisue/fern-renderer-nerdfont.vim'
+Plug 'szw/vim-maximizer'
+Plug 'Yggdroot/hiPairs'
 
+Plug 'jayli/vim-easycomplete'
+Plug 'SirVer/ultisnips'
+Plug 'https://github.com/honza/vim-snippets.git'
+Plug 'mlaursen/vim-react-snippets'
+Plug 'cristianoliveira/vim-react-html-snippets'
+Plug 'mattn/emmet-vim'
+Plug 'Exafunction/codeium.vim'
 call plug#end()
 "-----------------------------------------------------------------------------
 " Navigate through windows and buffers with the leader
@@ -120,7 +122,7 @@ inoremap <F1> <ESC>
 nnoremap <F1> <ESC>
 vnoremap <F1> <ESC>
 " Search with Ag (the silver sercher)
-let g:ackprg = 'ag --nogroup --nocolor --column'
+let g:ackprg = 'ag --nogroup --nocolor --column -Q'
 cnoreabbrev ag Ack
 cnoreabbrev aG Ack
 cnoreabbrev Ag Ack
@@ -187,7 +189,7 @@ function SetWebOptions()
 endfunction
 
 au BufNewFile,BufRead *.js,*.html,*.css,*.scss,*.sass: call SetWebOptions()
-au BufNewFile,BufRead *.html set filetype=htmldjango
+"au BufNewFile,BufRead *.html set filetype=htmldjango
 "-----------------------------------------------------------------------------
 " SplitJoin Plugin Settings
 "-----------------------------------------------------------------------------
@@ -197,6 +199,13 @@ nmap sj :SplitjoinJoin<cr>
 " Airline Variables
 "-----------------------------------------------------------------------------
 let g:airline_powerline_fonts = 1
+let g:airline#extensions#ale#enabled = 1
+"-----------------------------------------------------------------------------
+" ALE variables
+"-----------------------------------------------------------------------------
+let g:ale_fixers = {
+\   '*': ['remove_trailing_lines', 'trim_whitespace'],
+\}
 "-----------------------------------------------------------------------------
 " Snipmate variables
 "-----------------------------------------------------------------------------
@@ -259,8 +268,7 @@ let g:html_indent_tags = 'li\|p'
 " GOYO settings
 "-----------------------------------------------------------------------------
 nnoremap <Leader>gy :Goyo<CR>
-autocmd! User GoyoEnter Limelight
-autocmd! User GoyoLeave Limelight!
+let g:goyo_width = 88
 
 "-----------------------------------------------------------------------------
 " Limelight settings
@@ -333,5 +341,27 @@ endfunction
 
 augroup fern-custom
   autocmd! *
-  autocmd FileType fern call s:init_fern()
+  autocmd FileType fern setlocal norelativenumber | setlocal nonumber | call s:init_fern()
 augroup END
+
+let g:user_emmet_leader_key=','
+let g:easycomplete_scheme="sharp"
+
+"-----------------------------------------------------------------------------
+" Codeium settings
+" ----------------------------------------------------------------------------
+let g:surround_no_insert_mappings = 1
+let g:codeium_disable_mappings = 1
+let g:codeium_no_map_tab = 1
+imap <script><silent><nowait><expr> <C-g> codeium#Accept()
+imap <C-b>   <Cmd>call codeium#CycleCompletions(1)<CR>
+
+
+"-----------------------------------------------------------------------------
+" Vimux settings
+" ----------------------------------------------------------------------------
+let g:VimuxOrientation = "hb"
+ " Zoom the tmux runner page
+ map <Leader>z :VimuxTogglePane<CR>
+  " Open runner pane map
+ map <Leader>vo :VimuxOpenRunner<CR>
