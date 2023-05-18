@@ -29,11 +29,13 @@ call plug#begin('~/.vim/plugged')
 "# Colorscheme
 Plug 'shaond/vim-guru'
 Plug 'NLKNguyen/papercolor-theme'
+"
 "# Langs
 Plug 'sheerun/vim-polyglot'
 Plug 'leafgarland/typescript-vim'
 Plug 'peitalin/vim-jsx-typescript'
 Plug 'jparise/vim-graphql'
+Plug 'yasuhiroki/github-actions-yaml.vim'
 
 "# Tools
 Plug 'vim-airline/vim-airline'
@@ -77,7 +79,16 @@ Plug 'lambdalisue/fern.vim'
 Plug 'lambdalisue/fern-git-status.vim'
 Plug 'lambdalisue/nerdfont.vim'
 Plug 'lambdalisue/fern-renderer-nerdfont.vim'
+Plug 'szw/vim-maximizer'
+Plug 'Yggdroot/hiPairs'
 
+Plug 'jayli/vim-easycomplete'
+Plug 'SirVer/ultisnips'
+Plug 'https://github.com/honza/vim-snippets.git'
+Plug 'mlaursen/vim-react-snippets'
+Plug 'cristianoliveira/vim-react-html-snippets'
+Plug 'mattn/emmet-vim'
+Plug 'Exafunction/codeium.vim'
 call plug#end()
 "-----------------------------------------------------------------------------
 " Navigate through windows and buffers with the leader
