@@ -341,6 +341,27 @@ endfunction
 
 augroup fern-custom
   autocmd! *
-  autocmd FileType fern call s:init_fern()
   autocmd FileType fern setlocal norelativenumber | setlocal nonumber | call s:init_fern()
 augroup END
+
+let g:user_emmet_leader_key=','
+let g:easycomplete_scheme="sharp"
+
+"-----------------------------------------------------------------------------
+" Codeium settings
+" ----------------------------------------------------------------------------
+let g:surround_no_insert_mappings = 1
+let g:codeium_disable_mappings = 1
+let g:codeium_no_map_tab = 1
+imap <script><silent><nowait><expr> <C-g> codeium#Accept()
+imap <C-b>   <Cmd>call codeium#CycleCompletions(1)<CR>
+
+
+"-----------------------------------------------------------------------------
+" Vimux settings
+" ----------------------------------------------------------------------------
+let g:VimuxOrientation = "hb"
+ " Zoom the tmux runner page
+ map <Leader>z :VimuxTogglePane<CR>
+  " Open runner pane map
+ map <Leader>vo :VimuxOpenRunner<CR>
