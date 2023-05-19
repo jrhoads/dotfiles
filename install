@@ -73,7 +73,7 @@ setup_symlinks() {
     title "Creating symlinks"
 
     for file in $(get_linkables) ; do
-        target="$HOME/.$(basename "$file" '.symlink')"
+        target="$HOME/$(basename "$file" '.symlink')"
         if [ -e "$target" ]; then
             info "~${target#$HOME} already exists... Skipping."
         else
@@ -107,7 +107,7 @@ setup_homebrew() {
     if test ! "$(command -v brew)"; then
         info "Homebrew not installed. Installing."
         # Run as a login shell (non-interactive) so that the script doesn't pause for user input
-        curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh | bash --login
+        curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh | bash --login
     fi
 
     if [ "$(uname)" == "Linux" ]; then
