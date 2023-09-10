@@ -3,7 +3,6 @@
 set -e
 
 
-
 DOTFILES="$(pwd)"
 COLOR_GRAY="\033[1;38;5;243m"
 COLOR_BLUE="\033[1;34m"
@@ -113,12 +112,23 @@ setup_homebrew() {
     fi
     # install brew dependencies from Brewfile
     brew bundle
-    nvim --headless +PlugInstall +qa
 
     # install fzf
     echo -e
     info "Installing fzf"
     "$(brew --prefix)"/opt/fzf/install --key-bindings --completion --no-update-rc --no-fish
+    info "fzf installed"
+
+    info "Installing tmux plugin manager"
+    git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+    ~/.tmux/plugins/tpm/scripts/install_plugins.sh
+    info "tmux plugin manager installed"
+
+
+
+    info "Installing neovim plugins"
+    nvim --headless +PlugInstall +qa
+    info "neovim plugins installed"
 }
 
 function setup_terminfo() {
