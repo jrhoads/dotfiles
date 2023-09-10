@@ -57,9 +57,6 @@ backup() {
     done
 
     for filename in "$HOME/.config/nvim" "$HOME/.vim" "$HOME/.vimrc"; do
-
-
-
         if [ ! -L "$filename" ]; then
             echo "backing up $filename"
             cp -rf "$filename" "$BACKUP_DIR"
@@ -108,17 +105,16 @@ setup_homebrew() {
         info "Homebrew not installed. Installing."
         # Run as a login shell (non-interactive) so that the script doesn't pause for user input
         curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh | bash --login
-    fi
-
-    if [ "$(uname)" == "Linux" ]; then
-        test -d ~/.linuxbrew && eval "$(~/.linuxbrew/bin/brew shellenv)"
-        test -d /home/linuxbrew/.linuxbrew && eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
-        test -r ~/.bash_profile && echo "eval \$($(brew --prefix)/bin/brew shellenv)" >>~/.bash_profile
+        sudo apt-get install build-essential
+        NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+        eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+        rm -rf "/home/linuxbrew/.linuxbrew/Homebrew/Library/Taps/homebrew/homebrew-core"
+        brew tap homebrew/core
         echo "eval \"\$($(brew --prefix)/bin/brew shellenv)\"" >> ~/.profile
     fi
-
     # install brew dependencies from Brewfile
     brew bundle
+    nvim --headless +PlugInstall +qa
 
     # install fzf
     echo -e
