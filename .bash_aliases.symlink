@@ -1,4 +1,5 @@
 alias :q='exit'
+alias ag="ag --pager='less -RF'"
 alias cat="rich"
 alias clock="tty-clock -nc"
 alias denv='conda deactivate'
