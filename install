@@ -106,9 +106,7 @@ setup_homebrew() {
         sudo apt-get install build-essential
         NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
         eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
-        #rm -rf "/home/linuxbrew/.linuxbrew/Homebrew/Library/Taps/homebrew/homebrew-core"
-        #brew tap homebrew/core
-        echo "eval \"\$($(brew --prefix)/bin/brew shellenv)\"" >> ~/.profile
+        echo "eval \"\$($(brew --prefix)/bin/brew shellenv)\"" >> ~/.bash_profile
     fi
     # install brew dependencies from Brewfile
     brew bundle
@@ -119,16 +117,14 @@ setup_homebrew() {
     "$(brew --prefix)"/opt/fzf/install --key-bindings --completion --no-update-rc --no-fish
     info "fzf installed"
 
-    info "Installing tmux plugin manager"
-    git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
-    ~/.tmux/plugins/tpm/scripts/install_plugins.sh
-    info "tmux plugin manager installed"
-
-
-
     info "Installing neovim plugins"
     nvim --headless +PlugInstall +qa
     info "neovim plugins installed"
+
+    info "Installing tmux plugin manager"
+    git clone --depth=1 https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+    ~/.tmux/plugins/tpm/scripts/install_plugins.sh
+    info "tmux plugin manager installed"
 }
 
 function setup_terminfo() {
