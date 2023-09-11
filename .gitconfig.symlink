@@ -17,6 +17,7 @@
 	lg = log --oneline --abbrev-commit --decorate --all --graph --color
 	praise = blame
 	wd = diff --word-diff
+	p = push
 [push]
 	default = simple
 [diff]

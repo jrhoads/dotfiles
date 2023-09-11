@@ -15,6 +15,6 @@ Session.vim
 *.dvi
 *.aux
 *.elc
-vim/plugged
-vim/autoload/plug.vim.old
-vim/.netrwhist
+.vim.symlink/plugged
+.vim.symlink/autoload/plug.vim.old
+.vim.symlink/.netrwhist
