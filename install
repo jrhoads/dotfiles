@@ -115,16 +115,15 @@ setup_homebrew() {
     echo -e
     info "Installing fzf"
     "$(brew --prefix)"/opt/fzf/install --key-bindings --completion --no-update-rc --no-fish
-    info "fzf installed"
+    success "fzf installed"
 
     info "Installing neovim plugins"
     nvim --headless +PlugInstall +qa
-    info "neovim plugins installed"
+    success "neovim plugins installed"
 
     info "Installing tmux plugin manager"
     git clone --depth=1 https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
-    #~/.tmux/plugins/tpm/scripts/install_plugins.sh
-    info "tmux plugin manager installed"
+    success "tmux plugin manager installed"
 }
 
 function setup_terminfo() {
@@ -144,47 +143,26 @@ case "$1" in
     link)
         setup_symlinks
         ;;
-    git)
-        setup_git
-        ;;
     homebrew)
         setup_homebrew
         ;;
-    #shell)
-        #setup_shell
-        #;;
     terminfo)
         setup_terminfo
         ;;
-    #macos)
-        #setup_macos
-        #;;
-    #catppuccin)
-        #fetch_catppuccin_theme
-        #;;
     all)
         setup_symlinks
         setup_terminfo
         setup_homebrew
-        #setup_shell
-        #setup_git
-        #setup_macos
         ;;
     *)
-        echo -e $"\nUsage: $(basename "$0") {backup|link|git|homebrew|shell|terminfo|macos|all}\n"
-        exit 1
+        #echo -e $"\nUsage: $(basename "$0") {backup|link|git|homebrew|shell|terminfo|macos|all}\n"
+        backup
+        setup_symlinks
+        setup_terminfo
+        setup_homebrew
         ;;
 esac
 
 echo -e
 success "Done."
-
-
-#CONFIG="install.conf.yaml"
-#BASEDIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-
-#pip install dotbot
-#dotbot -d "${BASEDIR}" -c "${CONFIG}" "${@}"
-
-
 
