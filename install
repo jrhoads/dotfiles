@@ -156,7 +156,6 @@ case "$1" in
         ;;
     *)
         #echo -e $"\nUsage: $(basename "$0") {backup|link|git|homebrew|shell|terminfo|macos|all}\n"
-        backup
         setup_symlinks
         setup_terminfo
         setup_homebrew
