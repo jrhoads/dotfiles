@@ -1,7 +1,9 @@
 set -g default-terminal "tmux-256color"
-set -g status-style bg=default
 set -g window-status-style fg=magenta
-set -g status-bg default
+set -g window-status-current-style fg=black,bg=magenta
+set -g window-status-last-style fg=grey
+set -g status-bg colour235
+set -g status-fg grey
 set -g mouse on
 setw -g aggressive-resize on
 setw -q -g utf-8
@@ -10,19 +12,34 @@ set-window-option -g mode-keys vi
 
 # C-b is not acceptable -- Vim uses it
 set-option -g prefix C-a
-bind R source-file ~/.tmux.conf \; display-message "Config reloaded..."
 
-bind-key C-a last-window
+bind R source-file ~/.tmux.conf \; display-message "Config reloaded..."
+bind-key -r a last-window
 unbind %
 bind | split-window -h -c "#{pane_current_path}"
 bind _ split-window -v -c "#{pane_current_path}"
 unbind =
 bind = select-layout tiled
+bind -r Tab next-window
+bind h select-pane -L
+bind j select-pane -D
+bind k select-pane -U
+bind l select-pane -R
+bind C-h select-pane -L
+bind C-j select-pane -D
+bind C-k select-pane -U
+bind C-l select-pane -R
+
 bind -n M-a select-layout main-vertical
 bind -n M-A select-layout main-horizontal
 bind c new-window -c "#{pane_current_path}"
 bind @ choose-window 'join-pane -h -s "%%"'
 
+# resize panes more easily
+bind -r < resize-pane -L 5
+bind -r > resize-pane -R 5
+bind -r - resize-pane -D 5
+bind -r + resize-pane -U 5
 # don't suspend-client
 unbind-key C-z
 bind-key C-z resize-pane -Z
@@ -44,7 +61,7 @@ set -g status-right ''
 set -ag status-right '#[bg=deffault,fg=yellow]#{b:pane_current_path}'
 set -ag status-right ' #[bg=default]#(gitmux -cfg ~/.gitmux.cfg "#{pane_current_path}")'
 set -ag status-right '#[bg=deffault,fg=blue]#(TZ="America/New_York" date +" %%a %%H:%%M")'
-set -g status-justify right
+set -g status-justify centre
 
 # List of plugins.
 set -g @plugin 'tmux-plugins/tpm'
