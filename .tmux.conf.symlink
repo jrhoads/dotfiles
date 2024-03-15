@@ -15,6 +15,7 @@ set-option -g prefix C-a
 
 bind R source-file ~/.tmux.conf \; display-message "Config reloaded..."
 bind-key -r a last-window
+bind-key -r C-a last-window
 unbind %
 bind | split-window -h -c "#{pane_current_path}"
 bind _ split-window -v -c "#{pane_current_path}"
