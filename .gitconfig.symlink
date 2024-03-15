@@ -24,3 +24,5 @@
 	tool = vimdiff
 [merge]
 	tool = vimdiff
+[init]
+	defaultBranch = main
