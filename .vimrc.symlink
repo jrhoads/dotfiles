@@ -1,152 +1,13 @@
+" Moved most of this to neovim config
 "-----------------------------------------------------------------------------
-" Base Setup
+" * Base Setup
+" * LEADER REMAPPING
+" * Install Plugins
+" * Navigate through windows and buffers with the leader
+" * Split Preferences
+" * VimTest Plugin Settings
+" * Convenience
 "-----------------------------------------------------------------------------
-set encoding=UTF-8
-set nobackup
-set nowritebackup
-set noswapfile
-set cursorline
-set hidden
-set rnu
-set number
-set ruler
-set numberwidth=5
-set visualbell
-set listchars=tab:│·,trail:·,eol:¬
-set smartcase
-set ignorecase
-set lazyredraw
-set laststatus=2
-
-"-----------------------------------------------------------------------------
-" LEADER REMAPPING
-"-----------------------------------------------------------------------------
-let mapleader = ","
-"-----------------------------------------------------------------------------
-" Install Plugins
-"-----------------------------------------------------------------------------
-call plug#begin('~/.vim/plugged')
-"# Colorscheme
-Plug 'shaond/vim-guru'
-Plug 'NLKNguyen/papercolor-theme'
-"# Langs
-Plug 'sheerun/vim-polyglot'
-Plug 'leafgarland/typescript-vim'
-Plug 'peitalin/vim-jsx-typescript'
-Plug 'jparise/vim-graphql'
-Plug 'yasuhiroki/github-actions-yaml.vim'
-"# Tools
-Plug 'vim-airline/vim-airline'
-Plug 'tomtom/tlib_vim'
-Plug 'https://github.com/MarcWeber/vim-addon-mw-utils.git'
-Plug 'https://github.com/airblade/vim-gitgutter.git'
-Plug 'https://github.com/alfredodeza/pytest.vim.git'
-Plug 'https://github.com/ap/vim-css-color.git'
-Plug 'https://github.com/jeetsukumaran/vim-buffergator.git'
-Plug 'https://github.com/majutsushi/tagbar.git'
-Plug 'https://github.com/scrooloose/nerdcommenter.git'
-Plug 'https://github.com/thinca/vim-visualstar.git'
-Plug 'https://github.com/tmhedberg/SimpylFold.git'
-Plug 'mileszs/ack.vim'
-Plug 'tpope/vim-repeat'
-Plug 'tpope/vim-sensible'
-Plug 'tpope/vim-surround'
-Plug 'tpope/vim-unimpaired'
-Plug 'tpope/vim-dispatch'
-Plug 'tpope/vim-endwise'
-Plug 'tpope/vim-eunuch'
-Plug 'tpope/vim-fugitive'
-Plug 'dense-analysis/ale'
-Plug 'AndrewRadev/splitjoin.vim'
-Plug 'junegunn/fzf'
-Plug 'junegunn/fzf.vim'
-Plug 'junegunn/limelight.vim'
-Plug 'gabenespoli/vim-mutton'
-Plug 'junegunn/gv.vim'
-Plug 'junegunn/vim-slash'
-Plug 'ryanoasis/vim-devicons'
-
-"# Try out
-Plug 'vim-test/vim-test'
-Plug 'preservim/vimux'
-Plug 'voldikss/vim-floaterm'
-Plug 'lambdalisue/fern.vim'
-Plug 'lambdalisue/fern-git-status.vim'
-Plug 'lambdalisue/nerdfont.vim'
-Plug 'lambdalisue/fern-renderer-nerdfont.vim'
-Plug 'szw/vim-maximizer'
-Plug 'Yggdroot/hiPairs'
-
-Plug 'jayli/vim-easycomplete'
-"Plug 'SirVer/ultisnips'
-"Plug 'https://github.com/honza/vim-snippets.git'
-"Plug 'mlaursen/vim-react-snippets'
-"Plug 'cristianoliveira/vim-react-html-snippets'
-"Plug 'mattn/emmet-vim'
-Plug 'Exafunction/codeium.vim'
-" NVIM OLNY PLUGINS
-if has('nvim')
-  "Plug 'nvim-treesitter/nvim-treesitter'
-  Plug 'catppuccin/nvim', { 'as': 'catppuccin' }
-  "Plug 'pappasam/papercolor-theme-slim'
-  Plug 'nvim-tree/nvim-web-devicons'  
-  Plug 'goolord/alpha-nvim'
-endif
-call plug#end()
-"-----------------------------------------------------------------------------
-" Navigate through windows and buffers with the leader
-"-----------------------------------------------------------------------------
-let g:buffergator_suppress_keymaps = 1
-let g:buffergator_viewport_split_policy = "L"
-nnoremap <silent> <Leader><TAB> <C-W>W
-nnoremap <silent> <Leader><S-TAB> <C-W>p
-nnoremap <silent> <S-TAB> <C-W>w
-nnoremap <silent> <Leader><Space> :bn<cr>
-nnoremap <silent> <Leader><Leader> :bp<cr>
-nnoremap <silent> <Leader>b :MuttonToggle('buffergator')<cr>
-"-----------------------------------------------------------------------------
-" Split Preferences
-"-----------------------------------------------------------------------------
-set splitbelow
-set splitright
-"-----------------------------------------------------------------------------
-" VimTest Plugin Settings
-"-----------------------------------------------------------------------------
-nmap <silent><Leader>tf :TestFile<CR>
-nmap <silent><Leader>ts :TestSuite<CR>
-nmap <silent><Leader>tm :TestNearest<CR>
-"-----------------------------------------------------------------------------
-" Toggle Tagbar with F9
-nmap <F9> :MuttonToggle('tagbar')<CR>
-nmap <Leader>g :MuttonToggle('tagbar')<CR>
-"-----------------------------------------------------------------------------
-" Convenience
-"-----------------------------------------------------------------------------
-inoremap <F1> <ESC>
-nnoremap <F1> <ESC>
-vnoremap <F1> <ESC>
-" Search with Ag (the silver sercher)
-let g:ackprg = 'ag --vimgrep --nogroup --nocolor --column -Q'
-cnoreabbrev ag Ack
-cnoreabbrev aG Ack
-cnoreabbrev Ag Ack
-cnoreabbrev AG Ack
-" Find the word under the cursor
-nmap <Leader>\ :Ack<space><cword><CR>
-nnoremap \ :Ack<SPACE>
-" Highlight search
-set hlsearch
-" Toggle List Characters
-nmap <leader>l :set list!<CR>
-" Toggle Folding
-set foldmethod=indent
-set foldlevel=99
-nnoremap <Space> za
-" Escape from the home row
-inoremap jj <Esc>
-inoremap jk <Esc>
-inoremap kj <Esc>
-inoremap kk <Esc>
 " Delete trailing white space on save, useful for some filetypes ;)
 function CleanExtraSpaces()
     let save_cursor = getpos(".")
@@ -157,10 +18,9 @@ function CleanExtraSpaces()
 endfun
 
 " When saving files, delete trailing whitespace
-au BufWritePre *txt,*.json,*.ts,*.js,*.wiki,*.sh,*.rb,*.coffee,*.py: call CleanExtraSpaces()
+au BufWritePre *txt,*.json,*.ts,*.tsx,*.js,*.wiki,*.sh,*.rb,*.coffee,*.py: call CleanExtraSpaces()
 
 " When workign with python files use the following options
-au BufNewFile,BufRead *.py call SetPythonOptions()
 function SetPythonOptions()
     set tabstop=4
     set softtabstop=4
@@ -170,8 +30,8 @@ function SetPythonOptions()
     set fileformat=unix
     nnoremap <LocalLeader>= :0,$!yapf<CR>
 endfunction
+au BufNewFile,BufRead *.py call SetPythonOptions()
 
-au BufNewFile,BufRead *.rb call SetRubyOptions()
 function SetRubyOptions()
     set tabstop=2
     set softtabstop=2
@@ -180,6 +40,7 @@ function SetRubyOptions()
     set autoindent
     set fileformat=unix
 endfunction
+au BufNewFile,BufRead *.rb,*.lua: call SetRubyOptions()
 
 function SetWebOptions()
     set tabstop=2
@@ -191,25 +52,8 @@ function SetWebOptions()
     highlight htmlArg cterm=italic
     highlight htmlArg gui=italic
 endfunction
-au BufNewFile,BufRead *.js,*.html,*.css,*.scss,*.sass: call SetWebOptions()
 
-" When vim is resized, equalize the splits
-au VimResized * :wincmd =
-
-"au BufNewFile,BufRead *.html set filetype=htmldjango
-"-----------------------------------------------------------------------------
-" SplitJoin Plugin Settings
-"-----------------------------------------------------------------------------
-nmap sk :SplitjoinSplit<cr>
-nmap sj :SplitjoinJoin<cr>
-"-----------------------------------------------------------------------------
-" Airline Variables
-"-----------------------------------------------------------------------------
-let g:airline_powerline_fonts = 1
-let g:airline#extensions#ale#enabled = 1
-let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#tabline#formatter = 'unique_tail'
-
+au BufNewFile,BufRead *.js,*.ts,*.tsx,*.html,*.css,*.scss,*.sass: call SetWebOptions()
 "-----------------------------------------------------------------------------
 " ALE variables
 "-----------------------------------------------------------------------------
@@ -262,30 +106,12 @@ iab refernce reference
 iab Refernce Reference
 
 "-----------------------------------------------------------------------------
-" Colorscheme
-"-----------------------------------------------------------------------------
-set background=dark
-colorscheme PaperColor
-set colorcolumn=81
-
-"-----------------------------------------------------------------------------
 " XML settings
 "-----------------------------------------------------------------------------
 let g:xml_syntax_folding=1
 au FileType xml setlocal foldmethod=syntax
 " Treat <li> and <p> tags like the block tags they are
 let g:html_indent_tags = 'li\|p'
-
-"-----------------------------------------------------------------------------
-" Mutton settings
-"-----------------------------------------------------------------------------
-nnoremap <Leader>m :MuttonToggle<CR>
-let g:mutton_min_center_width = 88
-"-----------------------------------------------------------------------------
-" Limelight settings
-"-----------------------------------------------------------------------------
-let g:limelight_conceal_ctermfg = 'gray'
-let g:limelight_paragraph_span = 0
 
 "Enable moving by visible lines
 nnoremap <Leader>vv :nnoremap j gj<CR>:nnoremap k gk<CR>
@@ -295,12 +121,6 @@ nnoremap <Leader>vx :nunmap j<CR>:nunmap k<CR>
 highlight Comment cterm=italic
 "set t_ZH=^[[3m
 "set t_ZR=^[[23m
-"-----------------------------------------------------------------------------
-" Local config
-"-----------------------------------------------------------------------------
-if filereadable($HOME . "/.vimrc.local")
-  source ~/.vimrc.local
-endif
 
 "Move increment so it doesn't conflict with tmux
 :nnoremap <A-a> <C-a>
@@ -309,17 +129,7 @@ endif
 "-----------------------------------------------------------------------------
 "Fern
 "-----------------------------------------------------------------------------
-"
-" Disable netrw.
-let g:loaded_netrw  = 1
-let g:loaded_netrwPlugin = 1
-let g:loaded_netrwSettings = 1
-let g:loaded_netrwFileHandlers = 1
-
 " Custom Settings and mappings
-nmap <F6> :Fern . -drawer -reveal=% -toggle<CR>
-nmap <leader>f :Fern . -drawer -reveal=% -toggle<CR>
-let g:fern#renderer = "nerdfont"
 function! s:init_fern() abort
   echo "This function is called ON a fern buffer WHEN initialized"
   nmap <buffer><expr>
@@ -356,66 +166,18 @@ augroup fern-custom
   autocmd FileType fern setlocal norelativenumber | setlocal nonumber | call s:init_fern()
 augroup END
 
-let g:user_emmet_leader_key=','
-let g:user_emmet_install_global = 0
-autocmd FileType html,css EmmetInstall
-let g:easycomplete_scheme="sharp"
-
 "-----------------------------------------------------------------------------
 " Codeium settings
 " ----------------------------------------------------------------------------
-let g:surround_no_insert_mappings = 1
-let g:codeium_disable_mappings = 1
-let g:codeium_no_map_tab = 1
-imap <script><silent><nowait><expr> <C-g> codeium#Accept()
-imap <C-b>   <Cmd>call codeium#CycleCompletions(1)<CR>
-
-
 "-----------------------------------------------------------------------------
 " Vimux settings
 " ----------------------------------------------------------------------------
-let g:VimuxOrientation = "hb"
- " Zoom the tmux runner page
- map <Leader>z :VimuxTogglePane<CR>
-  " Open runner pane map
- map <Leader>vo :VimuxOpenRunner<CR>
- 
 "-----------------------------------------------------------------------------
 " FZF settings
 "-----------------------------------------------------------------------------
-set rtp+=/home/linuxbrew/.linuxbrew/opt/fzf
-nnoremap <C-p> :<C-u>:FZF<CR>
-nnoremap <leader>s :<C-u>:FZF<CR>
-
-let $FZF_DEFAULT_OPTS = '--layout=reverse --info=inline'
-let $FZF_DEFAULT_COMMAND="rg --files --hidden"
-" Customize fzf colors to match your color scheme
-let g:fzf_colors =
-\ { 'fg':      ['fg', 'Normal'],
-  \ 'bg':      ['bg', 'Normal'],
-  \ 'hl':      ['fg', 'Comment'],
-  \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
-  \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
-  \ 'hl+':     ['fg', 'Statement'],
-  \ 'info':    ['fg', 'PreProc'],
-  \ 'border':  ['fg', 'Ignore'],
-  \ 'prompt':  ['fg', 'Conditional'],
-  \ 'pointer': ['fg', 'Exception'],
-  \ 'marker':  ['fg', 'Keyword'],
-  \ 'spinner': ['fg', 'Label'],
-  \ 'header':  ['fg', 'Comment'] }
-
-let g:fzf_preview_window = ['right:50%', 'ctrl-/']
-"Get Files
-command! -bang -nargs=? -complete=dir Files
-    \ call fzf#vim#files(<q-args>, fzf#vim#with_preview({'options': ['--layout=reverse', '--info=inline']}), <bang>0)
-
-
-" Get text in files with Rg
-command! -bang -nargs=* Rg
-  \ call fzf#vim#grep(
-  \   'rg --column --line-number --no-heading --color=always --smart-case '.shellescape(<q-args>), 1,
-  \   fzf#vim#with_preview(), <bang>0)
-
-map <C-p> :Files<CR>
-
+"-----------------------------------------------------------------------------
+" Local config
+"-----------------------------------------------------------------------------
+if filereadable($HOME . "/.vimrc.local")
+  source ~/.vimrc.local
+endif
