@@ -17,5 +17,6 @@ alias ssh="ssh -q"
 alias tma='tmux -u attach-session -t remote &> /dev/null || tmux -u new-session -s remote'
 alias vim='nvim'
 alias f='fd'
+alias cd="z"
 function gi(){ git s ;}
 function gd(){ git diff $1 | dunk ;}

@@ -72,6 +72,7 @@ set -g @plugin 'tmux-plugins/tmux-continuum'
 
 set-option -sg escape-time 50
 set-option -g focus-events on
+set -g @tmux-nerd-font-window-name-show-name true
 
 # Local config
 if-shell "[ -f ~/.tmux.conf.local ]" 'source ~/.tmux.conf.local'
