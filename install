@@ -95,6 +95,24 @@ setup_symlinks() {
             ln -s "$config" "$target"
         fi
     done
+
+    bin_files=$(find "$DOTFILES/local/bin" -maxdepth 1 2>/dev/null)
+    info "installing to ~/.local/bin"
+    if [ ! -d "$HOME/.local/bin" ]; then
+        info "Creating ~/.local/bin"
+        mkdir -p "$HOME/.local/bin"
+    fi
+
+    for bin in $bin_files; do
+        target="$HOME/.local/bin/$(basename "$bin")"
+        if [ -e "$target" ]; then
+            info "~${target#$HOME} already exists... Skipping."
+        else
+            info "Creating symlink for $config"
+            ln -s "$bin" "$target"
+        fi
+    done
+
 }
 
 setup_homebrew() {
@@ -164,4 +182,3 @@ esac
 
 echo -e
 success "Done."
-
