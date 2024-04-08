@@ -42,6 +42,9 @@ return {
                 "--glob=!**/package-lock.json",
               }, -- find_command
             }, -- find_files
+	    colorscheme = {
+	      enable_preview = true
+	    }
           }, -- pickers
       }
 
@@ -52,6 +55,7 @@ return {
         vim.keymap.set('n', '<leader>h', builtin.help_tags, {})
         vim.keymap.set('n', '<leader>g', builtin.treesitter, {})
         vim.keymap.set('n', '<leader>/', builtin.current_buffer_fuzzy_find, {})
+        vim.keymap.set('n', '<leader>uu', builtin.colorscheme, {})
         vim.keymap.set('n', '\\', builtin.live_grep, {})
     end
   }
