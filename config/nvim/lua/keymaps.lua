@@ -3,6 +3,12 @@ vim.keymap.set('n', '<Leader><S-TAB>', '<C-W>p', { silent = true })
 vim.keymap.set('n', '<Leader><Space>', ':bn<cr>', { silent = true })
 vim.keymap.set('n', '<Leader><Leader>', ':bp<cr>', { silent = true })
 
+vim.keymap.set('n', '<C-h>', '<C-w>h', { silent = true })
+vim.keymap.set('n', '<C-j>', '<C-w>j', { silent = true })
+vim.keymap.set('n', '<C-k>', '<C-w>k', { silent = true })
+vim.keymap.set('n', '<C-l>', '<C-w>l', { silent = true })
+
+
 vim.keymap.set('n', '<F1>', '<ESC>')
 vim.keymap.set('i', '<F1>', '<ESC>')
 vim.keymap.set('v', '<F1>', '<ESC>')

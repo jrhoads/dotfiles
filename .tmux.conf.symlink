@@ -16,6 +16,7 @@ set-option -g prefix C-a
 bind R source-file ~/.tmux.conf \; display-message "Config reloaded..."
 bind-key -r a last-window
 bind-key -r C-a last-window
+bind -n C-s switch-client -n
 unbind %
 bind | split-window -h -c "#{pane_current_path}"
 bind _ split-window -v -c "#{pane_current_path}"
@@ -57,9 +58,10 @@ set -g renumber-windows on
 set -g status-position top
 # remove administrative debris (session name, hostname, time) in status bar
 set -g status-left ''
+set -g status-left '#[bg=default,fg=yellow][#S]'
 set -g status-right-length 60
 set -g status-right ''
-set -ag status-right '#[bg=deffault,fg=yellow]#{b:pane_current_path}'
+set -ag status-right '#[bg=default,fg=yellow]#{b:pane_current_path}'
 set -ag status-right ' #[bg=default]#(gitmux -cfg ~/.gitmux.cfg "#{pane_current_path}")'
 set -ag status-right '#[bg=deffault,fg=blue]#(TZ="America/New_York" date +" %%a %%H:%%M")'
 set -g status-justify centre
@@ -67,8 +69,9 @@ set -g status-justify centre
 # List of plugins.
 set -g @plugin 'tmux-plugins/tpm'
 set -g @plugin 'tmux-plugins/tmux-sensible'
-set -g @plugin 'tmux-plugins/tmux-resurrect'
-set -g @plugin 'tmux-plugins/tmux-continuum'
+set -g @plugin 'christoomey/vim-tmux-navigator'
+# set -g @plugin 'tmux-plugins/tmux-resurrect'
+# set -g @plugin 'tmux-plugins/tmux-continuum'
 
 set-option -sg escape-time 50
 set-option -g focus-events on
