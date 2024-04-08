@@ -21,14 +21,16 @@ do
     case $opt in
         "New Session")
             read -rp "Enter new session name [${default_value}]: " SESSION_NAME
-	    SESSiON_NAME=${SESSION_NAME:-$default_value}
-            tmux -u attach-session -t ${SESSiON_NAME} &> /dev/null || tmux new -s "${SESSION_NAME}"
+	    SESSION_NAME=${SESSION_NAME:-$default_value}
+            tmux -u attach-session -t ${SESSION_NAME} &> /dev/null || tmux -u new-session -s ${SESSION_NAME}
             break
             ;;
         *)
             # tmux attach-session -t "$opt"
             # tmux new-session -A -s "$opt"
-	    tmux -u attach-session -t ${opt:-$REPLY} &> /dev/null || tmux -u new-session -s ${opt:-$REPLY}
+	    SESSION_NAME=${opt:-$REPLY}
+            tmux -u attach-session -t ${SESSION_NAME} &> /dev/null || tmux -u new-session -s ${SESSION_NAME}
+	    # tmux -u attach-session -t ${opt:-$REPLY} &> /dev/null || tmux -u new-session -s ${opt:-$REPLY}
             break
             ;;
     esac
