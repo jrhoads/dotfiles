@@ -1,0 +1,35 @@
+#!/usr/bin/env bash
+
+# abort if we're already inside a TMUX session
+if [ "$TMUX" != "" ]
+then
+	echo "Already in TMUX maybe switch sessions [Ctrl-S] "
+	exit 0
+fi
+
+# Get the current directory name
+default_value=$(basename "$PWD")
+# present menu for user to choose which workspace to open
+PS3="Please choose your session: "
+# shellcheck disable=SC2207
+IFS=$'\n' && options=("New Session" $(tmux list-sessions -F "#S" 2>/dev/null))
+echo "Available sessions"
+echo "------------------"
+echo " "
+select opt in "${options[@]}"
+do
+    case $opt in
+        "New Session")
+            read -rp "Enter new session name [${default_value}]: " SESSION_NAME
+	    SESSiON_NAME=${SESSION_NAME:-$default_value}
+            tmux -u attach-session -t ${SESSiON_NAME} &> /dev/null || tmux new -s "${SESSION_NAME}"
+            break
+            ;;
+        *)
+            # tmux attach-session -t "$opt"
+            # tmux new-session -A -s "$opt"
+	    tmux -u attach-session -t ${opt:-$REPLY} &> /dev/null || tmux -u new-session -s ${opt:-$REPLY}
+            break
+            ;;
+    esac
+done
