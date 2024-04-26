@@ -5,15 +5,18 @@ return{
 		config = function()
 			require('nvim-treesitter.configs').setup {
 				ensure_installed = {
+					"json",
 					"javascript",
 					"typescript",
+					"tsx",
 					"c",
 					"lua",
 					"rust",
 					"python",
 					"php",
+					"prisma",
+					"dockerfile",
 					"yaml",
-					"json",
 					"ruby",
 					"css",
 					"html",
@@ -23,6 +26,10 @@ return{
 					"bash",
 					"diff",
 					"gitcommit",
+					"vimdoc",
+					"graphql",
+					"query",
+					"gitignore",
 				},
 				highlight = {
 					-- `false` will disable the whole extension
