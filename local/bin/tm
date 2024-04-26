@@ -3,35 +3,43 @@
 # abort if we're already inside a TMUX session
 if [ "$TMUX" != "" ]
 then
-	echo "Already in TMUX maybe switch sessions [Ctrl-S] "
-	exit 0
+    # echo "Already in TMUX maybe switch sessions [Ctrl-S] "
+    tmux choose-tree -Zs
+    exit 0
 fi
 
 # Get the current directory name
-default_value=$(basename "$PWD")
-# present menu for user to choose which workspace to open
-PS3="Please choose your session: "
-# shellcheck disable=SC2207
-IFS=$'\n' && options=("New Session" $(tmux list-sessions -F "#S" 2>/dev/null))
-echo "Available sessions"
-echo "------------------"
-echo " "
-select opt in "${options[@]}"
-do
-    case $opt in
-        "New Session")
-            read -rp "Enter new session name [${default_value}]: " SESSION_NAME
-	    SESSION_NAME=${SESSION_NAME:-$default_value}
-            tmux -u attach-session -t ${SESSION_NAME} &> /dev/null || tmux -u new-session -s ${SESSION_NAME}
-            break
-            ;;
-        *)
-            # tmux attach-session -t "$opt"
-            # tmux new-session -A -s "$opt"
-	    SESSION_NAME=${opt:-$REPLY}
-            tmux -u attach-session -t ${SESSION_NAME} &> /dev/null || tmux -u new-session -s ${SESSION_NAME}
-	    # tmux -u attach-session -t ${opt:-$REPLY} &> /dev/null || tmux -u new-session -s ${opt:-$REPLY}
-            break
-            ;;
-    esac
+
+# Initialize an empty array for session names
+session_list=()
+
+# Read each session name into an array element
+while IFS= read -r line; do
+    session_list+=("$line")
+done < <(tmux list-sessions -F "#{session_name}" 2>/dev/null)
+options=("New Session")
+options+=("${session_list[@]}")
+
+# Format options with numbers
+formatted_options=()
+index=0
+for opt in "${options[@]}"; do
+	formatted_options+=("($index) + $opt")
+    ((index++))
 done
+# Use fzf to select an option with enhanced UI options
+selected=$(printf '%s\n' "${formatted_options[@]}" | fzf --height=10% --layout=reverse --border --exit-0 --prompt='Select TMUX session: ')
+
+# Extract the session name or number from the selected option
+selection=$(echo "$selected" | cut -d ' ' -f 3-)
+
+default_value=$(basename "$PWD")
+# Check if user selected "New Session" or an existing session
+if [ "$selection" == "New Session" ]; then
+    read -rp "Enter new session name [${default_value}]: " SESSION_NAME
+    SESSION_NAME=${SESSION_NAME:-$default_value}
+    tmux -u new-session -s "${SESSION_NAME}" || tmux -u attach-session -t "${SESSION_NAME}"
+else
+    SESSION_NAME=${selection:-$default_value}
+    tmux -u attach-session -t "${SESSION_NAME}" || tmux -u new-session -s "${SESSION_NAME}"
+fi
