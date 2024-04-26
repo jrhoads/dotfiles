@@ -10,7 +10,9 @@ alias l='ls -CF'
 alias la='ls -A'
 alias ll='ls -lF'
 alias lla='ls -laF'
-alias nenv='virtualenv --no-site-package --prompt=\(${PWD##*/}-env\) env && senv && pipup'
+alias senv='source env/bin/activate'
+alias denv='deactivate'
+alias nenv='virtualenv --prompt=\(${PWD##*/}-env\) env && senv && pipup'
 alias pipup='pip install -U pip'
 alias pss="python -m http.server"
 alias ssh="ssh -q"
