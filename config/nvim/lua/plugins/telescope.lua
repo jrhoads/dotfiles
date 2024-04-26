@@ -24,39 +24,65 @@ return {
             } -- i
           }, -- mappings
         }, -- defaults
-          pickers = {
-            find_files = {
-              hidden = true,
-              -- needed to exclude some files & dirs from general search
-              -- when not included or specified in .gitignore
-              find_command = {
-                "rg",
-                "--files",
-                "--hidden",
-                "--glob=!**/.git/*",
-                "--glob=!**/.idea/*",
-                "--glob=!**/.vscode/*",
-                "--glob=!**/build/*",
-                "--glob=!**/dist/*",
-                "--glob=!**/yarn.lock",
-                "--glob=!**/package-lock.json",
-              }, -- find_command
-            }, -- find_files
-	    colorscheme = {
-	      enable_preview = true
-	    }
-          }, -- pickers
-      }
+        pickers = {
+            grep_string = {
+                additional_args = {
+                    "--hidden",
+                    "--glob=!**/.git/*",
+                    "--glob=!**/.idea/*",
+                    "--glob=!**/.vscode/*",
+                    "--glob=!**/build/*",
+                    "--glob=!**/dist/*",
+                    "--glob=!**/yarn.lock",
+                    "--glob=!**/package-lock.json",
+                }
+            },
+            live_grep = {
+                additional_args = {
+                    "--hidden",
 
-        local builtin = require('telescope.builtin')
-        vim.keymap.set('n', '<C-p>', builtin.find_files, {})
-        vim.keymap.set('n', '<leader>r', builtin.live_grep, {})
-        vim.keymap.set('n', '<leader>b', builtin.buffers, {})
-        vim.keymap.set('n', '<leader>h', builtin.help_tags, {})
-        vim.keymap.set('n', '<leader>g', builtin.treesitter, {})
-        vim.keymap.set('n', '<leader>/', builtin.current_buffer_fuzzy_find, {})
-        vim.keymap.set('n', '<leader>uu', builtin.colorscheme, {})
-        vim.keymap.set('n', '\\', builtin.live_grep, {})
-    end
+                    "--glob=!**/.git/*",
+                    "--glob=!**/.idea/*",
+                    "--glob=!**/.vscode/*",
+                    "--glob=!**/build/*",
+                    "--glob=!**/dist/*",
+                    "--glob=!**/yarn.lock",
+                    "--glob=!**/package-lock.json",
+                }
+            },
+            find_files = {
+                hidden = true,
+                -- needed to exclude some files & dirs from general search
+                -- when not included or specified in .gitignore
+                find_command = {
+                    "rg",
+                    "--files",
+                    "--hidden",
+                    "--glob=!**/.git/*",
+                    "--glob=!**/.idea/*",
+                    "--glob=!**/.vscode/*",
+                    "--glob=!**/build/*",
+                    "--glob=!**/dist/*",
+                    "--glob=!**/yarn.lock",
+                    "--glob=!**/package-lock.json",
+                }, -- find_command
+            }, -- find_files
+            colorscheme = {
+                enable_preview = true
+            }
+        }, -- pickers
+    }
+
+    local builtin = require('telescope.builtin')
+    vim.keymap.set('n', '<C-p>', builtin.find_files, {})
+    vim.keymap.set('n', '<leader>r', builtin.live_grep, {})
+    vim.keymap.set('n', '<leader>b', builtin.buffers, {})
+    vim.keymap.set('n', '<leader>h', builtin.help_tags, {})
+    vim.keymap.set('n', '<leader>g', builtin.treesitter, {})
+    vim.keymap.set('n', '<leader>/', builtin.current_buffer_fuzzy_find, {})
+    -- vim.keymap.set('n', '/', builtin.current_buffer_fuzzy_find, {})
+    vim.keymap.set('n', '<leader>uu', builtin.colorscheme, {})
+    vim.keymap.set('n', '\\', builtin.live_grep, {})
+end
   }
 }
