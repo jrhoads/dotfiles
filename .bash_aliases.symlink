@@ -10,9 +10,8 @@ alias l='ls -CF'
 alias la='ls -A'
 alias ll='ls -lF'
 alias lla='ls -laF'
-alias senv='source env/bin/activate'
 alias denv='deactivate'
-alias nenv='virtualenv --prompt=\(${PWD##*/}-env\) env && senv && pipup'
+alias nenv='virtualenv --prompt=${PWD##*/}-env env && senv && pipup'
 alias pipup='pip install -U pip'
 alias pss="python -m http.server"
 alias ssh="ssh -q"
@@ -22,3 +21,4 @@ alias f='fd'
 alias cd="z"
 function gi(){ git s ;}
 function gd(){ git diff $1 | dunk ;}
+function senv(){ source ${1:-env}/bin/activate;}
