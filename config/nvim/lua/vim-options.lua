@@ -24,3 +24,6 @@ vim.cmd.colorscheme('slate')
 vim.api.nvim_set_hl(0, "Comment", { fg = "green"})
 
 vim.g.html_indent_tags = {li, p}
+
+vim.g.spell = true
+vim.g.spelllang = 'en_us'
