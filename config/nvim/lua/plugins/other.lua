@@ -18,6 +18,17 @@ return {
             vim.g.ale_sign_error = '✘'
             vim.g.ale_sign_warning = '⚠'
             vim.g.ale_fix_on_save = 1
+	    vim.g.ale_linters = {
+		    python = { 'ruff', },
+		    javascript = { 'eslint' },
+		    typescript = { 'eslint' },
+		    graphql = { 'eslint' },
+	    }
+	    vim.g.ale_fixers = {
+		    python = { 'black', 'isort'},
+		    javascript = { 'prettier', 'eslint' },
+		    typescript = { 'prettier', 'eslint' },
+	    }
         end
     },
     {
