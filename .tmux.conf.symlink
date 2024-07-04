@@ -63,7 +63,7 @@ set -g status-right-length 60
 set -g status-right ''
 set -ag status-right '#[bg=default,fg=yellow]#{b:pane_current_path}'
 set -ag status-right ' #[bg=default]#(gitmux -cfg ~/.gitmux.cfg "#{pane_current_path}")'
-set -ag status-right '#[bg=deffault,fg=blue]#(TZ="America/New_York" date +" %%a %%H:%%M")'
+set -ag status-right '#[bg=deffault,fg=blue]#(TZ="Europe/Madrid" date +" %%a %%H:%%M")'
 set -g status-justify centre
 
 # List of plugins.
