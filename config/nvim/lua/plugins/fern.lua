@@ -16,7 +16,8 @@ return{
             vim.g.loaded_netrwFileHandlers = 1
 
 
-            vim.keymap.set('n', '<leader>f', ":Fern . -reveal=% -drawer -toggle<cr>", {silent = true})
+            -- vim.keymap.set('n', '<leader>f', ":Fern . -reveal=% -drawer -toggle<cr>", {silent = true})
+            vim.keymap.set('n', '<leader><left>', ":Fern . -reveal=% -drawer -toggle<cr>", {silent = true})
             vim.keymap.set('n', '<F6>', ":Fern . -reveal=% -drawer -toggle<cr>", {silent = true})
         end
 
