@@ -22,14 +22,9 @@ keyset('i', 'jk', '<Esc>')
 keyset('i', 'kj', '<Esc>')
 keyset('i', 'kk', '<Esc>')
 
-keyset('n', '<Space>', 'za', { noremap = true })
+keyset('n', '<Backspace>', 'ciw', { noremap = true })
 keyset('n', '<Leader>ll', ':set list!<CR>', { noremap = true, silent = true })
 
--- resize windows easily
-keyset("n", "<down>", ":resize +2<cr>")
-keyset("n", "<up>", ":resize -2<cr>")
-keyset("n", "<right>", ":vertical resize +2<cr>")
-keyset("n", "<left>", ":vertical resize -2<cr>")
 
 -- movement while in isert mode
 keyset("i", "<C-h>", "<left>", { noremap = true })
@@ -37,3 +32,19 @@ keyset("i", "<C-j>", "<down>", { noremap = true })
 keyset("i", "<C-k>", "<up>", { noremap = true })
 keyset("i", "<C-l>", "<right>", { noremap = true })
 
+-- beginning and end of line --
+keyset("n", "H", "^", { noremap = true })
+keyset("n", "L", "$", { noremap = true })
+
+-- Center the screen after scrolling up/down with Ctrl-u/d
+vim.keymap.set("n", "<C-u>", "<C-u>zz")
+vim.keymap.set("n", "<C-d>", "<C-d>zz")
+
+-- Center the screen on the next/prev search result with n/N
+vim.keymap.set("n", "n", "nzzzv")
+vim.keymap.set("n", "N", "Nzzzv")
+
+-- yank to clipboard
+vim.keymap.set({"n", "v"}, "<leader>y", [["+y]])
+-- yank line to clipboard
+vim.keymap.set("n", "<leader>Y", [["+Y]])
