@@ -125,15 +125,18 @@ setup_homebrew() {
         NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
         eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
         echo "eval \"\$($(brew --prefix)/bin/brew shellenv)\"" >> ~/.bashrc
+        success "Homebrew installed"
     fi
     # install brew dependencies from Brewfile
+    info "Installing brew dependencies from Brewfile"
     brew bundle
+    success "brew dependencies installed"
 
     # install fzf
     echo -e
-    info "Installing fzf"
+    info "Installing fzf to the shell"
     "$(brew --prefix)"/opt/fzf/install --key-bindings --completion --no-update-rc --no-fish
-    success "fzf installed"
+    success "fzf installed to the shell"
 
     info "Installing neovim plugins"
     nvim --headless +PlugInstall +qa
@@ -142,6 +145,10 @@ setup_homebrew() {
     info "Installing tmux plugin manager"
     git clone --depth=1 https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
     success "tmux plugin manager installed"
+
+    info "Installing tmux plugins"
+    ~/.tmux/plugins/tpm/bin/install_plugins
+    success "tmux plugins installed"
 }
 
 function setup_terminfo() {
@@ -149,9 +156,11 @@ function setup_terminfo() {
 
     info "adding tmux.terminfo"
     tic -x "$DOTFILES/resources/tmux.terminfo"
+    success "tmux.terminfo installed"
 
     info "adding xterm-256color-italic.terminfo"
     tic -x "$DOTFILES/resources/xterm-256color-italic.terminfo"
+    success "xterm-256color-italic.terminfo installed"
 }
 
 case "$1" in

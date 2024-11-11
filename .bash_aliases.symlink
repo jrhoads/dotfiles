@@ -5,8 +5,9 @@ alias clock="tty-clock -nc"
 alias dc='docker compose'
 alias git="hub"
 alias gits="git s"
+alias gb='git checkout -b'
 alias ls="lsd -h"
-alias l='ls -CF'
+alias l='ls -F'
 alias la='ls -A'
 alias ll='ls -lF'
 alias lla='ls -laF'
@@ -19,6 +20,15 @@ alias tma='tmux -u attach-session -t remote &> /dev/null || tmux -u new-session 
 alias vim='nvim'
 alias f='fd'
 alias cd="z"
+alias t="tm"
 function gi(){ git s ;}
 function gd(){ git diff $1 | dunk ;}
 function senv(){ source ${1:-env}/bin/activate;}
+
+# Parent Directory Shortcuts
+alias ~='cd ~'
+alias -- -='cd -'
+alias ..='cd ..'
+alias ...='cd ../..'
+alias ....='cd ../../..'
+alias .....='cd ../../../..'

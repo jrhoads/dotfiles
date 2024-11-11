@@ -7,176 +7,40 @@
 " * Split Preferences
 " * VimTest Plugin Settings
 " * Convenience
+" " Delete trailing white space on save, useful for some filetypes ;)
+" " When saving files, delete trailing whitespace
+" * Autocommands based on filetype
+" * ALE variables
+" * Fix constant spelling mistakes
+" * Fern
+" * Codeium settings
+" * Vimux settings
+" * FZF settings
+" * Local config
+" * XML settings
+" * Enable Italics in Comments
+" * Enable Italics in Comments
+" highlight Comment cterm=italic
 "-----------------------------------------------------------------------------
-" Delete trailing white space on save, useful for some filetypes ;)
-function CleanExtraSpaces()
-    let save_cursor = getpos(".")
-    let old_query = getreg('/')
-    silent! %s/\s\+$//e
-    call setpos('.', save_cursor)
-    call setreg('/', old_query)
-endfun
+" "-----------------------------------------------------------------------------
+" " Snipmate variables
+" "-----------------------------------------------------------------------------
+" let g:snipMate = { 'snippet_version' : 1 }
+" let g:snips_author = 'Joseph Rhoads'
+" let g:snips_email = 'jrhoads@datacite.org'
+" let g:snips_github = 'jrhoads'
+"-----------------------------------------------------------------------------
+"-----------------------------------------------------------------------------
+"-----------------------------------------------------------------------------
+"-----------------------------------------------------------------------------
+" "Enable moving by visible lines
+" nnoremap <Leader>vv :nnoremap j gj<CR>:nnoremap k gk<CR>
+" nnoremap <Leader>vx :nunmap j<CR>:nunmap k<CR>
 
-" When saving files, delete trailing whitespace
-au BufWritePre *txt,*.json,*.ts,*.tsx,*.js,*.wiki,*.sh,*.rb,*.coffee,*.py: call CleanExtraSpaces()
-
-" When workign with python files use the following options
-function SetPythonOptions()
-    set tabstop=4
-    set softtabstop=4
-    set shiftwidth=4
-    set expandtab
-    set autoindent
-    set fileformat=unix
-    nnoremap <LocalLeader>= :0,$!yapf<CR>
-endfunction
-au BufNewFile,BufRead *.py call SetPythonOptions()
-
-function SetRubyOptions()
-    set tabstop=2
-    set softtabstop=2
-    set shiftwidth=2
-    set expandtab
-    set autoindent
-    set fileformat=unix
-endfunction
-au BufNewFile,BufRead *.rb,*.lua: call SetRubyOptions()
-
-function SetWebOptions()
-    set tabstop=2
-    set softtabstop=2
-    set shiftwidth=2
-    set expandtab
-    set autoindent
-    set fileformat=unix
-    highlight htmlArg cterm=italic
-    highlight htmlArg gui=italic
-endfunction
-
-au BufNewFile,BufRead *.js,*.ts,*.tsx,*.html,*.css,*.scss,*.sass: call SetWebOptions()
-"-----------------------------------------------------------------------------
-" ALE variables
-"-----------------------------------------------------------------------------
-let g:ale_fixers = {
-\   '*': ['remove_trailing_lines', 'trim_whitespace'],
-\}
-"-----------------------------------------------------------------------------
-" Snipmate variables
-"-----------------------------------------------------------------------------
-let g:snipMate = { 'snippet_version' : 1 }
-let g:snips_author = 'Joseph Rhoads'
-let g:snips_email = 'jrhoads@datacite.org'
-let g:snips_github = 'jrhoads'
-"-----------------------------------------------------------------------------
-"" Fix constant spelling mistakes
-"-----------------------------------------------------------------------------
-iab teh       the
-iab Teh       The
-iab taht      that
-iab Taht      That
-iab alos      also
-iab Alos      Also
-iab aslo      also
-iab Aslo      Also
-iab becuase   because
-iab Becuase   Because
-iab bianry    binary
-iab Bianry    Binary
-iab bianries  binaries
-iab Bianries  Binaries
-iab charcter  character
-iab Charcter  Character
-iab charcters characters
-iab Charcters Characters
-iab exmaple   example
-iab Exmaple   Example
-iab exmaples  examples
-iab Exmaples  Examples
-iab shoudl    should
-iab Shoudl    Should
-iab seperate  separate
-iab Seperate  Separate
-iab fone      phone
-iab Fone      Phone
-iab collectoin collection
-iab Collectoin Collection
-iab allignment alignment
-iab Allignment Alignment
-iab refernce reference
-iab Refernce Reference
-
-"-----------------------------------------------------------------------------
-" XML settings
-"-----------------------------------------------------------------------------
-let g:xml_syntax_folding=1
-au FileType xml setlocal foldmethod=syntax
-" Treat <li> and <p> tags like the block tags they are
-let g:html_indent_tags = 'li\|p'
-
-"Enable moving by visible lines
-nnoremap <Leader>vv :nnoremap j gj<CR>:nnoremap k gk<CR>
-nnoremap <Leader>vx :nunmap j<CR>:nunmap k<CR>
-
-"Enable Italics in Comments
-highlight Comment cterm=italic
 "set t_ZH=^[[3m
 "set t_ZR=^[[23m
 
-"Move increment so it doesn't conflict with tmux
-:nnoremap <A-a> <C-a>
-:nnoremap <A-x> <C-x>
 
-"-----------------------------------------------------------------------------
-"Fern
-"-----------------------------------------------------------------------------
-" Custom Settings and mappings
-function! s:init_fern() abort
-  echo "This function is called ON a fern buffer WHEN initialized"
-  nmap <buffer><expr>
-        \ <Plug>(fern-my-open-expand-collapse)
-        \ fern#smart#leaf(
-        \   "\<Plug>(fern-action-open)<C-w><C-p>",
-        \   "\<Plug>(fern-action-expand)",
-        \   "\<Plug>(fern-action-collapse)",
-        \ )
-  nmap <buffer><expr>
-        \ <Plug>(fern-my-expand-or-collapse)
-        \ fern#smart#leaf(
-        \   "\<Plug>(fern-action-collapse)",
-        \   "\<Plug>(fern-action-expand)",
-        \   "\<Plug>(fern-action-collapse)",
-        \ )
-
-  " Open node with 'o'
-  nmap <buffer> o <Plug>(fern-action-open)<C-w><C-p>
-  nmap <buffer> s <Plug>(fern-action-open:vsplit)<C-w><C-p>
-  nmap <buffer> ma <Plug>(fern-action-new-path)
-  nmap <buffer> r <Plug>(fern-action-reload)
-  nmap <buffer> q :<C-u>quit<CR>
-
-  nmap <buffer><nowait> H <Plug>(fern-action-leave)
-  nmap <buffer><nowait> L <Plug>(fern-action-enter)
-  nmap <buffer><nowait> <CR> <Plug>(fern-my-open-expand-collapse)
-
-  " Add any code to customize fern buffer
-endfunction
-
-augroup fern-custom
-  autocmd! *
-  autocmd FileType fern setlocal norelativenumber | setlocal nonumber | call s:init_fern()
-augroup END
-
-"-----------------------------------------------------------------------------
-" Codeium settings
-" ----------------------------------------------------------------------------
-"-----------------------------------------------------------------------------
-" Vimux settings
-" ----------------------------------------------------------------------------
-"-----------------------------------------------------------------------------
-" FZF settings
-"-----------------------------------------------------------------------------
-"-----------------------------------------------------------------------------
-" Local config
 "-----------------------------------------------------------------------------
 if filereadable($HOME . "/.vimrc.local")
   source ~/.vimrc.local
