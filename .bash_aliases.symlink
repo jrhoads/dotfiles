@@ -5,6 +5,7 @@ alias clock="tty-clock -nc"
 alias dc='docker compose'
 alias git="hub"
 alias gits="git s"
+alias gb='git checkout -b'
 alias ls="lsd -h"
 alias l='ls -F'
 alias la='ls -A'
