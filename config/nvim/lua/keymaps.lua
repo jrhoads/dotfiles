@@ -37,14 +37,18 @@ keyset("n", "H", "^", { noremap = true })
 keyset("n", "L", "$", { noremap = true })
 
 -- Center the screen after scrolling up/down with Ctrl-u/d
-vim.keymap.set("n", "<C-u>", "<C-u>zz")
-vim.keymap.set("n", "<C-d>", "<C-d>zz")
+keyset("n", "<C-u>", "<C-u>zz")
+keyset("n", "<C-d>", "<C-d>zz")
 
 -- Center the screen on the next/prev search result with n/N
-vim.keymap.set("n", "n", "nzzzv")
-vim.keymap.set("n", "N", "Nzzzv")
+keyset("n", "n", "nzzzv")
+keyset("n", "N", "Nzzzv")
 
 -- yank to clipboard
-vim.keymap.set({"n", "v"}, "<leader>y", [["+y]])
+keyset({"n", "v"}, "<leader>y", [["+y]])
 -- yank line to clipboard
-vim.keymap.set("n", "<leader>Y", [["+Y]])
+keyset("n", "<leader>Y", [["+Y]])
+
+-- Move increment to alt so it doesn't confluct with tmux
+keyset({'n', 'v'}, '<A-a>', '<C-a>', { noremap = true })
+keyset({'n', 'v'}, '<A-z>', '<C-x>', { noremap = true })
