@@ -67,7 +67,7 @@ return {
                     "--glob=!**/package-lock.json",
                 }, -- find_command
 		mappings = {
-			
+
 			i = {
 				[".."] = function(prompt_bufnr)
 					local current_picker =
@@ -129,14 +129,21 @@ return {
 end
   },
   --lazy
-{
-    "nvim-telescope/telescope-file-browser.nvim",
-    dependencies = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim" },
+  {
+      "nvim-telescope/telescope-file-browser.nvim",
+      dependencies = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim" },
+      config = function()
+        require("telescope").load_extension "file_browser"
+        vim.keymap.set('n', '<leader>ff', require('telescope').extensions.file_browser.file_browser, {})
+      end
+
+
+  },
+  {
+    "nvim-telescope/telescope-ui-select.nvim",
+    dependencies = { "nvim-telescope/telescope.nvim" },
     config = function()
-	    require("telescope").load_extension "file_browser"
-	    vim.keymap.set('n', '<leader>ff', require('telescope').extensions.file_browser.file_browser, {})
+      require("telescope").load_extension "ui-select"
     end
-
-
-}
+  }
 }
