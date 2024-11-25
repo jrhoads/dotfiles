@@ -14,6 +14,8 @@ set-window-option -g mode-keys vi
 set-option -g prefix C-a
 
 bind R source-file ~/.tmux.conf \; display-message "Config reloaded..."
+
+bind -r C-t set-option status
 bind-key -r a last-window
 bind-key -r C-a last-window
 bind-key -r n next-window
@@ -61,6 +63,7 @@ set-option -g renumber-windows on
 # Moves status bar to the top
 set -g status-position top
 # remove administrative debris (session name, hostname, time) in status bar
+set -g status-left-length 60
 set -g status-left ''
 set -g status-left '#[bg=default,fg=yellow][#S]'
 set -g status-right-length 60
