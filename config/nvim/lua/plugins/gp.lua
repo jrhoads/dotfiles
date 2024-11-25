@@ -4,11 +4,6 @@ return {
     local conf = {
       openai_api_key = { "op.exe", "read", "op://Private/gpnvim/credential" },
       providers = {
-        -- secrets can be strings or tables with command and arguments
-        -- secret = { "cat", "path_to/openai_api_key" },
-        -- secret = { "bw", "get", "password", "OPENAI_API_KEY" },
-        -- secret : "sk-...",
-        -- secret = os.getenv("env_name.."),
         anthropic = {
           disable = false,
           endpoint = "https://api.anthropic.com/v1/messages",
