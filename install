@@ -108,7 +108,7 @@ setup_symlinks() {
         if [ -e "$target" ]; then
             info "~${target#$HOME} already exists... Skipping."
         else
-            info "Creating symlink for $config"
+            info "Creating symlink for $bin"
             ln -s "$bin" "$target"
         fi
     done
