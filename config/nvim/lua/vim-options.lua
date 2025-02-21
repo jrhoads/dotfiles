@@ -13,7 +13,7 @@ vim.opt.listchars = { tab = '| ', trail = '·', eol = '↴' }
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
 vim.opt.hlsearch = true
-vim.opt.laststatus = 2
+vim.opt.laststatus = 3
 
 vim.opt.splitbelow = true
 vim.opt.splitright = true
@@ -25,7 +25,7 @@ vim.opt.termguicolors = true
 vim.opt.background = 'dark'
 vim.opt.colorcolumn = '81,82'
 
-vim.g.html_indent_tags = {li, p}
+vim.g.html_indent_tags = {'li', 'p'}
 
 vim.g.spell = true
 vim.g.spelllang = 'en_us'
