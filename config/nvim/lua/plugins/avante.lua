@@ -3,7 +3,7 @@ return {
   event = "VeryLazy",
   lazy = false,
   -- version = 'v0.0.9', -- set to last release before winfixbuf
-  version = '*', -- set to last release before winfixbuf
+  version = '*', -- NOTE: When using newer versions, you must edit sidebar.lua to comment out winfixbuf
   opts = {
     provider = "claude",
     claude = {
@@ -40,7 +40,7 @@ return {
         ---@type "ours" | "theirs"
         focus_on_apply = "ours", -- which diff to focus after applying
       },
-      winfixbuf = false,
+      winfixbuf = false, -- Currently ignored but hopeful that future versions will respect this
     },
   },
   build = "make",
