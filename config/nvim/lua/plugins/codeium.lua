@@ -1,13 +1,29 @@
-return {
-    'Exafunction/codeium.vim',
+  return {
+    "Exafunction/codeium.nvim",
     event = "BufEnter",
-    config = function()
-        vim.g.surround_no_insert_mappings = 1
-        vim.g.codeium_disable_mappings = 1
-        vim.g.codeium_no_map_tab = 1
-        vim.keymap.set('i', '<C-g>', "codeium#Accept()", { silent = true, script = true, nowait= true, expr = true })
-        vim.keymap.set('i', '<C-b>', function() return vim.fn['codeium#CycleCompletions'](1) end, { expr = true, silent = true })
-	vim.keymap.set('i', '<C-f>', function() return vim.fn['codeium#CycleCompletions'](-1) end, { expr = true, silent = true })
-	vim.keymap.set('i', '<C-x>', function() return vim.fn['codeium#Clear']() end, { expr = true, silent = true })
-    end
-}
+    enabled=true,
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      -- "hrsh7th/nvim-cmp",
+    },
+    opts = {
+      enable_chat = false,
+      enable_cmp_source = true,
+      surround_no_insert_mappings = true,
+      -- map_keys = false,
+      virtual_text = {
+        enabled = true,
+        map_keys = true,
+        key_bindings = {
+          -- Accept the current completion.
+          accept = "<C-g>",
+          -- Accept the current completion and move to the next one.
+          next = "<C-b>",
+          -- Accept the current completion and move to the previous one.
+          prev = "<C-f>",
+          -- Dismiss the current completion.
+          clear = "<C-x>",
+        },
+      }
+    },
+  }
