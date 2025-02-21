@@ -45,10 +45,10 @@ keyset("n", "n", "nzzzv")
 keyset("n", "N", "Nzzzv")
 
 -- yank to clipboard
-keyset({"n", "v"}, "<leader>y", [["+y]])
+keyset({ "n", "v" }, "<leader>y", [["+y]])
 -- yank line to clipboard
 keyset("n", "<leader>Y", [["+Y]])
 
 -- Move increment to alt so it doesn't confluct with tmux
-keyset({'n', 'v'}, '<A-a>', '<C-a>', { noremap = true })
-keyset({'n', 'v'}, '<A-z>', '<C-x>', { noremap = true })
+keyset({ 'n', 'v' }, '<A-a>', '<C-a>', { noremap = true })
+keyset({ 'n', 'v' }, '<A-z>', '<C-x>', { noremap = true })

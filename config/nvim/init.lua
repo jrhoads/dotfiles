@@ -24,6 +24,10 @@ vim.api.nvim_set_hl(0, "Keyword", { italic=true })
 vim.api.nvim_set_hl(0, 'Normal', { bg = 'none' })
 vim.api.nvim_set_hl(0, 'NormalFloat', { bg = 'none' })
 
+-- Make split borders subtle
+vim.opt.fillchars = "vert:│,horiz:─"
+vim.api.nvim_set_hl(0, 'WinSeparator', { fg = '#808080', bg = 'NONE' })
+
 -- autocommands last
 vim.api.nvim_create_autocmd("BufWritePost", {
     pattern = "*.tmux.conf",

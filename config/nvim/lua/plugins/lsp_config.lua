@@ -35,13 +35,43 @@ return {
         -- capabilities = capabilities
       })
       -- lspconfig.ruby_lsp.setup({
-      --   capabilities = capabilities,
-      --   cmd = { "/home/typecraft/.asdf/shims/ruby-lsp" }
+      --   -- capabilities = capabilities,
+      --   cmd = {
+      --     "docker",
+      --     "compose",
+      --     "exec",
+      --     "-T",
+      --     "web",
+      --     "bundle",
+      --     "exec",
+      --     "ruby-lsp",
+      --   },
+      --   root_dir = lspconfig.util.root_pattern("Gemfile", ".git", "config.ru"),
+      --   filetypes = { "ruby" },
+      --   init_options = {
+      --     formatter = "rubocop",
+      --     linter = "rubocop",
+      --     enabledFeatures = {
+      --       "codeActions",
+      --       "diagnostics",
+      --       "documentHighlights",
+      --       "documentLink",
+      --       "documentSymbols",
+      --       "foldingRanges",
+      --       "formatting",
+      --       "hover",
+      --       "inlayHint",
+      --       "onTypeFormatting",
+      --       "selectionRanges",
+      --       "semanticHighlighting",
+      --     }
+      --   }
+
       -- })
       lspconfig.html.setup({
         -- capabilities = capabilities
       })
-      lspconfig.tsserver.setup({
+      lspconfig.ts_ls.setup({
         -- capabilities = capabilities
       })
       lspconfig.lua_ls.setup({
@@ -51,7 +81,7 @@ return {
       vim.keymap.set("n", "K", vim.lsp.buf.hover, {})
       vim.keymap.set("n", "<leader>ld", vim.lsp.buf.definition, {})
       vim.keymap.set("n", "<leader>lr", vim.lsp.buf.references, {})
-      vim.keymap.set("n", "<leader>la", vim.lsp.buf.code_action, {})
+      vim.keymap.set({ "n", "v" }, "<leader>la", vim.lsp.buf.code_action, {})
       vim.keymap.set("n", "<leader>lf", vim.lsp.buf.format, {})
       vim.keymap.set('n', '<leader>ln', vim.lsp.buf.rename, {})
     end,
