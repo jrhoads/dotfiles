@@ -3,6 +3,7 @@ return {
   enabled=true,
   dependencies = {
     "rafamadriz/friendly-snippets",
+    "Kaiser-Yang/blink-cmp-avante",
     -- "mikavilpas/blink-ripgrep.nvim",
     -- 'dmitmel/cmp-digraphs',
     "Exafunction/codeium.nvim",
@@ -60,6 +61,7 @@ return {
     },
     sources = {
       default = {
+        "avante",
         "codeium",
         "lazydev",
         -- "path",
@@ -69,6 +71,13 @@ return {
         -- "digraphs",
       },
       providers = {
+        avante = {
+          module = 'blink-cmp-avante',
+          name = 'Avante',
+          opts = {
+            -- options for blink-cmp-avante
+          }
+        },
       --   digraphs = {
       --     name = 'digraphs',
       --     module = 'blink.compat.source',

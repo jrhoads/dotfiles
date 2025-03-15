@@ -1,5 +1,16 @@
 return {
   "robitx/gp.nvim",
+  cmd = {
+    "GpChatNew",
+    "GpChatToggle",
+    "GpChatFinder"
+  },
+  keys = {
+    { "<Leader>gt", "<cmd>GpChatToggle<cr>", desc = "Toggle GPT Chat" },
+    { "<Leader>gg", "<cmd>GpChatNew<cr>", desc = "New GPT Chat", mode = { "n", "v" } },
+    { "<Leader>gc", "<cmd>GpChatNew<cr>", desc = "New GPT Chat", mode = { "n", "v" } },
+    { "<Leader>gf", "<cmd>GpChatFinder<cr>", desc = "Find GPT Chat" },
+  },
   config = function()
     local conf = {
       openai_api_key = { "op.exe", "read", "op://Private/gpnvim/credential" },

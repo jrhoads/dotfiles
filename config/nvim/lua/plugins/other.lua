@@ -95,7 +95,13 @@ return {
       -- When vim is resized, equalize the splits
       vim.api.nvim_create_autocmd({ "VimResized" }, {
         pattern = "*",
-        command = "wincmd ="
+        callback = function()
+          local ft = vim.bo.filetype
+
+          if ft ~= "Avante" then
+            vim.cmd("tabdo wincmd =")
+          end
+        end,
       })
     end
   },

@@ -11,8 +11,10 @@ return {
       enabled = true,
       timeout = 3000,
     },
+    input = { enabled = true },
     quickfile = { enabled = true },
     statuscolumn = { enabled = true },
+    zenmode = { enabled = true },
     words = { enabled = false },
     styles = {
       notification = {
