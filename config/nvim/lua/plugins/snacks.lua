@@ -2,10 +2,23 @@ return {
   "folke/snacks.nvim",
   priority = 1000,
   lazy = false,
-  ---@type snacks.Config
   opts = {
     bigfile = { enabled = true },
-    dashboard = { enabled = false },
+    dashboard = {
+      enabled = true,
+      preset = {
+        header = [[
+                                                                             
+               ████ ██████           █████      ██                     
+              ███████████             █████                             
+              █████████ ███████████████████ ███   ███████████   
+             █████████  ███    █████████████ █████ ██████████████   
+            █████████ ██████████ █████████ █████ █████ ████ █████   
+          ███████████ ███    ███ █████████ █████ █████ ████ █████  
+         ██████  █████████████████████ ████ █████ █████ ████ ██████ 
+      ]],
+    }
+    },
     lazygit = { enabled = false },
     notifier = {
       enabled = true,
@@ -91,6 +104,7 @@ return {
     vim.api.nvim_create_autocmd("User", {
       pattern = "VeryLazy",
       callback = function()
+        -- vim.api.nvim_set_hl(0, "SnacksDashboardHeader", { fg = "cyan" })
         -- Setup some globals for debugging (lazy-loaded)
         _G.dd = function(...)
           Snacks.debug.inspect(...)
