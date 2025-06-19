@@ -65,6 +65,7 @@ return {
       vim.g.ale_fixers = {
         ['*'] = {'remove_trailing_lines', 'trim_whitespace'},
         python = { 'black', 'isort'},
+        lua = {},
         -- Enable these if you work with JavaScript/TypeScript
         -- javascript = { 'prettier', 'eslint' },
         -- typescript = { 'prettier', 'eslint' },
@@ -74,19 +75,6 @@ return {
       vim.g.ale_floating_preview = 1
       vim.g.ale_hover_to_floating_preview = 1
       vim.g.ale_detail_to_floating_preview = 1
-    end
-  },
-  {
-    'AndrewRadev/splitjoin.vim',
-    desc = "Switch between single-line and multiline forms of code",
-    keys = {
-      { "sk", ":SplitjoinSplit<cr>", desc = "Split code block" },
-      { "sj", ":SplitjoinJoin<cr>", desc = "Join code block" },
-    },
-    config = function()
-      vim.g.splitjoin_html_attributes_bracket_on_new_line = 1
-      vim.g.splitjoin_trailing_comma = 1
-      vim.g.splitjoin_python_brackets_on_separate_lines = 1
     end
   },
   {

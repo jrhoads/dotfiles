@@ -1,14 +1,14 @@
 #!/usr/bin/env bash
 
-# abort if we're already inside a TMUX session
-# if [ "$TMUX" != "" ]
-# then
-#     # echo "Already in TMUX maybe switch sessions [Ctrl-S] "
-#     tmux choose-tree -Zs
-#     exit 0
-# fi
-
-# Get the current directory name
+if [ $# -eq 1 ]; then
+    SESSION_NAME="$1"
+    if [ "$TMUX" != "" ]; then
+        tmux switch-client -t "${SESSION_NAME}" 2>/dev/null || tmux new-session -d -s "${SESSION_NAME}" && tmux switch-client -t "${SESSION_NAME}"
+    else
+        tmux -u attach-session -t "${SESSION_NAME}" 2>/dev/null || tmux -u new-session -s "${SESSION_NAME}"
+    fi
+    exit 0
+fi
 
 # Initialize an empty array for session names
 session_list=()
@@ -28,25 +28,37 @@ for opt in "${options[@]}"; do
     ((index++))
 done
 # Use fzf to select an option with enhanced UI options
-selected=$(printf '%s\n' "${formatted_options[@]}" | fzf-tmux -p --height=10% --layout=reverse --border --exit-0 --prompt='Select TMUX session: ')
+# The output will have query on first line, selection on second line (if any)
+readarray -t fzf_output < <(printf '%s\n' "${formatted_options[@]}" | fzf-tmux -p --print-query --height=10% --layout=reverse --border --exit-0 --prompt='Select TMUX session: ')
 
-# Extract the session name or number from the selected option
-selection=$(echo "$selected" | cut -d ' ' -f 3-)
+query="${fzf_output[0]}"
+selected="${fzf_output[1]:-}"
+# selected=$(printf '%s\n' "${formatted_options[@]}" | fzf-tmux -p --height=10% --layout=reverse --border --exit-0 --prompt='Select TMUX session: ')
 
-default_value=$(basename "$PWD")
-# Check if user selected "New Session" or an existing session
-if [ "$selection" == "New Session" ]; then
-    read -rp "Enter new session name [${default_value}]: " SESSION_NAME
-    SESSION_NAME=${SESSION_NAME:-$default_value}
-    tmux -u new-session -d -s "${SESSION_NAME}"
+# If there's no selection but there is a query, ask to create new session
+if [ -z "$selected" ] && [ -n "$query" ]; then
+    read -rp "Create new session '$query'? [Y/n]: " confirm
+    confirm=${confirm:-Y}
+    if [[ $confirm =~ ^[Yy] ]]; then
+        SESSION_NAME="$query"
+        tmux -u new-session -d -s "${SESSION_NAME}"
+    else
+        exit 0
+    fi
 else
-    SESSION_NAME=${selection:-$default_value}
-	# if [ "$TMUX" != "" ]
-	# 	then
-	# 		tmux switch-client -t "${SESSION_NAME}"
-	# 	else
-	# 	    tmux -u attach-session -t "${SESSION_NAME}" || tmux -u new-session -s "${SESSION_NAME}"
-	# fi
+  # Extract the session name or number from the selected option
+  selection=$(echo "$selected" | cut -d ' ' -f 3-)
+
+  # Get the current directory name
+  default_value=$(basename "$PWD")
+  # Check if user selected "New Session" or an existing session
+  if [ "$selection" == "New Session" ]; then
+      read -rp "Enter new session name [${default_value}]: " SESSION_NAME
+      SESSION_NAME=${SESSION_NAME:-$default_value}
+      tmux -u new-session -d -s "${SESSION_NAME}"
+  else
+      SESSION_NAME=${selection:-$default_value}
+  fi
 fi
 if [ "$TMUX" != "" ]
 then

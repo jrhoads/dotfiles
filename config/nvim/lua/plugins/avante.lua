@@ -1,18 +1,46 @@
 return {
   "yetone/avante.nvim",
   event = "VeryLazy",
-  --   keys = {
-  --       { "<leader>aa", "<cmd>AvanteAsk<cr>", mode = "n", desc = "Avante Ask" },
-  --       { "<leader>aa", ":<C-u>AvanteAsk<cr>", mode = "v", desc = "Avante Ask Selection" },
-  --   },
   -- lazy = true,
   -- version = 'v0.0.9', -- set to last release before winfixbuf
   version = '*', -- NOTE: When using newer versions, you must edit sidebar.lua to comment out winfixbuf
   opts = {
     provider = "claude",
+    provider = "gemini",
+    auto_suggestions_provider = nil,
+    vendors = {
+      openrouter = {
+        __inherited_from = 'openai',
+        endpoint = 'https://openrouter.ai/api/v1',
+        api_key_name = 'cmd:op.exe read op://Private/OpenRouter-NVIM/credential',
+        model = 'google/gemini-2.5-flash-preview-05-20',
+      },
+    },
     claude = {
-      api_key_name = { "op.exe", "read", "op://Private/Antropic-NVIM/credential" },
+      endpoint = "https://api.anthropic.com",
+      -- model = "claude-3-7-sonnet-20250219",
       model = "claude-3-5-sonnet-20241022",
+      api_key_name = "cmd:op.exe read op://Private/Antropic-NVIM/credential",
+      temperature = 0,
+      max_tokens = 8192,
+      disable_tools = true,
+    },
+    gemini = {
+      endpoint = "https://generativelanguage.googleapis.com/v1beta/models",
+      -- model = "gemini-2.0-flash",
+      model = "gemini-2.5-flash-lite-preview-06-17",
+      -- model = "gemini-2.5-flash-preview-04-17",
+      -- model = "gemini-2.5-pro-preview-05-06",
+      api_key_name = "cmd:op.exe read op://Private/Gemini-NVIM/credential",
+      timeout = 30000, -- Timeout in milliseconds
+      temperature = 0,
+      max_tokens = 1048576,
+    },
+    behavior = {
+      auto_suggestions = false,
+      auto_set_highlight_group = true,
+      minimize_diff = true, -- Whether to remove unchanged lines when applying a code block
+      enable_token_counting = true
     },
     mappings = {
       submit = {
@@ -57,10 +85,8 @@ return {
     "stevearc/dressing.nvim",
     "nvim-lua/plenary.nvim",
     "MunifTanjim/nui.nvim",
-    --- The below dependencies are optional,
-    "nvim-tree/nvim-web-devicons", -- or echasnovski/mini.icons
+    "nvim-tree/nvim-web-devicons",
     {
-      -- Make sure to set this up properly if you have lazy=true
       'MeanderingProgrammer/render-markdown.nvim',
       opts = {
         file_types = { "markdown", "Avante" },
