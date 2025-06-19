@@ -30,8 +30,9 @@ return {
     dependencies = {
       "mason.nvim",
       "mason-lspconfig.nvim",
+      "saghen/blink.cmp",
     },
-    config = function()
+    config = function(_, opts)
       -- Set up keymaps first so they're ready even before LSP attaches
       local function on_attach(_, bufnr)
         local opts = { buffer = bufnr }
@@ -43,6 +44,8 @@ return {
         vim.keymap.set('n', '<leader>ln', vim.lsp.buf.rename, opts)
       end
 
+      -- Blink Capabilities
+      local capabilities = require('blink.cmp').get_lsp_capabilities()
       -- Common LSP settings
       local lspconfig = require("lspconfig")
       local servers = {
@@ -58,6 +61,7 @@ return {
           on_attach = on_attach,
         })
       end
+      lspconfig.lua_ls.setup { capabilities = capabilities }
     end,
   },
 }
