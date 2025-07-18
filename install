@@ -145,7 +145,7 @@ setup_homebrew() {
     success "fzf installed to the shell"
 
     info "Installing neovim plugins"
-    nvim --headless +PlugInstall +qa
+    nvim --c "Lazy sync" -c "qa!"
     success "neovim plugins installed"
 
     info "Installing tmux plugin manager"
