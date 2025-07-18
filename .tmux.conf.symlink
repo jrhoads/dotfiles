@@ -42,7 +42,6 @@ bind C-l select-pane -R
 
 bind -n M-a select-layout main-vertical
 bind -n M-A select-layout main-horizontal
-bind -n M-b popup -d "#{pane_current_path}" -E -h 95% -w 95% -x 100% "bpytop"
 bind -n M-j command-prompt -p "Jrnl Entry: " "run-shell 'jrnl work \"%1\"'"
 
 bind c new-window -c "#{pane_current_path}"
