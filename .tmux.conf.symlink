@@ -1,3 +1,4 @@
+set-environment -g TMUX_PLUGIN_MANAGER_PATH "$HOME/.tmux/plugins/"
 set -g default-terminal "tmux-256color"
 set -g window-status-style fg=magenta
 set -g window-status-current-style fg=black,bg=blue
