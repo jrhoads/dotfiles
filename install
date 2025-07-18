@@ -132,6 +132,12 @@ setup_homebrew() {
     brew bundle
     success "brew dependencies installed"
 
+    # install zoxide
+    echo -e
+    info "Installing zoxide to the shell"
+    echo "eval \"\$($(brew --prefix)/bin/zoxide init bash)\"" >> ~/.bashrc
+    success "zoxide installed to the shell"
+
     # install fzf
     echo -e
     info "Installing fzf to the shell"
@@ -149,6 +155,10 @@ setup_homebrew() {
     info "Installing tmux plugins"
     ~/.tmux/plugins/tpm/bin/install_plugins
     success "tmux plugins installed"
+
+    info "Installing pipx packages"
+    ./install_pipx_packages.sh
+    success "pipx packages installed"
 }
 
 function setup_terminfo() {
