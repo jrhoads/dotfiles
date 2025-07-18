@@ -1,6 +1,7 @@
 return {
   {
     'nvim-telescope/telescope.nvim',
+    enabled = false,
     dependencies = { 'nvim-lua/plenary.nvim' },
     config = function()
       require('telescope').setup{
@@ -116,16 +117,16 @@ return {
     end
     local builtin = require('telescope.builtin')
     -- vim.keymap.set('n', '<C-p>', builtin.find_files, {})
-    vim.keymap.set('n', '<leader>r', builtin.live_grep, {})
+    -- vim.keymap.set('n', '<leader>r', builtin.live_grep, {})
     -- vim.keymap.set('n', '<leader>b', builtin.buffers, {})
     -- vim.keymap.set('n', '<leader>fb', builtin.buffers, {})
-    vim.keymap.set('n', '<leader>h', builtin.help_tags, {})
-    vim.keymap.set('n', '<leader>fg', builtin.treesitter, {})
-    vim.keymap.set('n', '<leader>/', builtin.current_buffer_fuzzy_find, {})
-    vim.keymap.set('n', '<leader>*', my_grep, {})
+    -- vim.keymap.set('n', '<leader>h', builtin.help_tags, {})
+    -- vim.keymap.set('n', '<leader>fg', builtin.treesitter, {})
+    -- vim.keymap.set('n', '<leader>/', builtin.current_buffer_fuzzy_find, {})
+    -- vim.keymap.set('n', '<leader>*', my_grep, {})
     -- vim.keymap.set('n', '/', builtin.current_buffer_fuzzy_find, {})
     -- vim.keymap.set('n', '<leader>uu', builtin.colorscheme, {})
-    vim.keymap.set('n', '\\', builtin.live_grep, {})
+    -- vim.keymap.set('n', '\\', builtin.live_grep, {})
 end
   },
   --lazy
@@ -142,6 +143,7 @@ end
   {
     "nvim-telescope/telescope-ui-select.nvim",
     dependencies = { "nvim-telescope/telescope.nvim" },
+    enabled=false,
     config = function()
       require("telescope").load_extension "ui-select"
     end
