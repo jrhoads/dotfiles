@@ -52,6 +52,12 @@ return {
     { "<leader>ff", function() Snacks.picker.files() end, desc = "Find Files" },
     { "<leader>fs", function() Snacks.picker.smart() end, desc = "Smart Find Files" },
     { "<leader>sw", function() Snacks.picker.grep_word() end, desc = "Visual selection or word", mode = { "n", "x" } },
+    { "<leader>*", function() Snacks.picker.grep_word() end, desc = "Visual selection or word", mode = { "n", "x" } },
+    { "<leader>fg", function() Snacks.picker.treesitter() end, desc = "Treesitter" },
+    { "<leader>fh", function() Snacks.picker.help() end, desc = "Help" },
+    { "<leader>/", function() Snacks.picker.lines() end, desc = "Live Grep" },
+    { "<leader>\\", function() Snacks.picker.grep() end, desc = "Live Grep" },
+    { "<leader>r", function() Snacks.picker.grep() end, desc = "Live Grep" },
     { "<leader>fb", function() Snacks.picker.buffers({
       -- I always want my buffers picker to start in normal mode
       on_show = function()

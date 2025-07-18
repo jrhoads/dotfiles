@@ -31,6 +31,7 @@ return {
   },
   {
     'dense-analysis/ale',
+    enabled = false,
     desc = "Asynchronous Lint Engine",
     event = { "BufReadPost", "BufNewFile" },
     config = function()

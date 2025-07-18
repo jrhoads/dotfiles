@@ -11,12 +11,14 @@ return {
     "saghen/blink.compat",
   },
   lazy = false,
+
   -- event = "InsertEnter",
   build = ":UpdateRemotePlugins",
   version = "*",
   opts = {
     keymap = {
-      preset = 'default',
+      preset = 'super-tab',
+      ['<C-f>'] = { 'show', 'show_documentation', 'hide_documentation' },
     },
     cmdline = {
       keymap = {
@@ -43,13 +45,13 @@ return {
           end,
         },
       },
-      -- documentation = {
-      --   window = { border = "rounded" },
-      --   --   auto_show = true,
-      --   --   auto_show_delay_ms = 500,
-      -- },
+      documentation = {
+        window = { border = "rounded" },
+        --   auto_show = true,
+        --   auto_show_delay_ms = 500,
+      },
       menu = {
-        auto_show = true,
+        auto_show = false,
         border = "rounded",
         draw = {
           columns = {
