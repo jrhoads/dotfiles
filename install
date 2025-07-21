@@ -143,18 +143,29 @@ setup_homebrew() {
     info "Installing fzf to the shell"
     "$(brew --prefix)"/opt/fzf/install --key-bindings --completion --no-update-rc --no-fish
     success "fzf installed to the shell"
+  }
+
+function install_neovim_plugins() {
+    title "Installing neovim plugins"
 
     info "Installing neovim plugins"
     nvim -c "Lazy sync" -c "qa!"
     success "neovim plugins installed"
+  }
 
-    info "Installing tmux plugin manager"
-    git clone --depth=1 https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
-    success "tmux plugin manager installed"
+function install_tmux_plugins() {
+  title "Installing tmux plugins"
+  info "Installing tmux plugin manager"
+  git clone --depth=1 https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+  success "tmux plugin manager installed"
 
-    info "Installing tmux plugins"
-    ~/.tmux/plugins/tpm/bin/install_plugins
-    success "tmux plugins installed"
+  info "Installing tmux plugins"
+  ~/.tmux/plugins/tpm/bin/install_plugins
+  success "tmux plugins installed"
+}
+
+function install_pipx_packages() {
+    title "Installing pipx packages"
 
     info "Installing pipx packages"
     ./install_pipx_packages.sh
@@ -171,6 +182,12 @@ function setup_terminfo() {
     info "adding xterm-256color-italic.terminfo"
     tic -x "$DOTFILES/resources/xterm-256color-italic.terminfo"
     success "xterm-256color-italic.terminfo installed"
+}
+
+function install_all_packages() {
+    install_neovim_plugins
+    install_tmux_plugins
+    install_pipx_packages
 }
 
 case "$1" in
@@ -196,6 +213,7 @@ case "$1" in
         setup_symlinks
         setup_terminfo
         setup_homebrew
+        install_all_packages
         ;;
 esac
 
