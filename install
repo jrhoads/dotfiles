@@ -149,7 +149,7 @@ function install_neovim_plugins() {
     title "Installing neovim plugins"
 
     info "Installing neovim plugins"
-    nvim -c "Lazy sync" -c "qa!"
+    nvim --headless "+Lazy! sync" +qa
     success "neovim plugins installed"
   }
 
@@ -185,9 +185,9 @@ function setup_terminfo() {
 }
 
 function install_all_packages() {
-    install_neovim_plugins
-    install_tmux_plugins
     install_pipx_packages
+    install_tmux_plugins
+    install_neovim_plugins
 }
 
 case "$1" in
