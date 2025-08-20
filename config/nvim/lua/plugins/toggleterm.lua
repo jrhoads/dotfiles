@@ -5,7 +5,6 @@ return {
     keys = {
       { "<c-t>", "<cmd>ToggleTerm<cr>", desc = "Toggle terminal" },
       { "<m-`>", "<cmd>ToggleTerm<cr>", desc = "Toggle terminal" },
-      { "<leader>lg", "<cmd>lua require('toggleterm.terminal').Terminal:new({cmd = 'lazygit', dir = 'git_dir', direction = 'float', float_opts = {border = 'double'}}):toggle()<cr>", desc = "LazyGit" },
     },
     opts = {
       open_mapping = [[<M-`>]],
