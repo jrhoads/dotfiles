@@ -52,3 +52,9 @@ keyset("n", "<leader>Y", [["+Y]])
 -- Move increment to alt so it doesn't confluct with tmux
 keyset({ 'n', 'v' }, '<A-a>', '<C-a>', { noremap = true })
 keyset({ 'n', 'v' }, '<A-z>', '<C-x>', { noremap = true })
+
+ -- Remap the visual block to Ctrl+Q. 
+vim.keymap.set('n', '<C-q>', '<C-v>', { noremap = true })
+ -- Remap the Line block to Shift-Q. 
+vim.keymap.set('n', 'Q','V', { noremap = true })
+
