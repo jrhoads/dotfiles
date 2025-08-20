@@ -5,7 +5,7 @@ return {
   opts = {
     bigfile = { enabled = true },
     dashboard = {
-      enabled = true,
+      enabled = false,
       preset = {
         header = [[
                                                                              
