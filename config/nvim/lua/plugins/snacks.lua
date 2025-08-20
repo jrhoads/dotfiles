@@ -97,7 +97,7 @@ return {
         show_empty = true,
         supports_live = true,
         -- In case you want to override the layout for this keymap
-        layout = "vscode",
+        -- layout = "select",
       }) end,
       desc = "Find Files",
     },
