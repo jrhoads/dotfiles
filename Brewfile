@@ -1,6 +1,7 @@
 brew "bat"
 #brew "asdf"
 brew "fzf"
+brew "fd"
 # brew "gh"
 # brew "git"
 brew "lsd"
