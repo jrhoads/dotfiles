@@ -187,7 +187,7 @@ function setup_terminfo() {
 function install_all_packages() {
     install_pipx_packages
     install_tmux_plugins
-    install_neovim_plugins
+    # install_neovim_plugins
 }
 
 case "$1" in
