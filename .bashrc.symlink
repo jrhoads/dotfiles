@@ -87,6 +87,9 @@ fi
 # Default tmux.conf variables
 export TMUX_STATUS_BG="green"
 
+# Default less config for color
+export LESS=-R
+
 # Alias definitions.
 # You may want to put all your additions into a separate file like
 # ~/.bash_aliases, instead of adding them here directly.

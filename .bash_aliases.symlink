@@ -1,5 +1,6 @@
 alias :q='exit'
-alias ag="ag --pager='less -RF'"
+alias ag="rg --color=always"
+alias rg="rg --color=always"
 alias cat="rich"
 alias clock="tty-clock -nc"
 alias dc='docker compose'
