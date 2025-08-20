@@ -4,7 +4,7 @@ return {
       version = "*",
       dependencies = 'nvim-tree/nvim-web-devicons',
       event = "BufReadPost",
-      enabled = true,
+      enabled = false,
       opts = {
         options = {
           separator_style = 'slant',
