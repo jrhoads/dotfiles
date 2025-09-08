@@ -36,11 +36,17 @@ return {
       -- Set up keymaps first so they're ready even before LSP attaches
       local function on_attach(_, bufnr)
         local opts = { buffer = bufnr }
+        local opts = { buffer = bufnr, desc = "LSP: Show documentation" }
         vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
+        opts = { buffer = bufnr, desc = "LSP: Go to definition" }
         vim.keymap.set("n", "<leader>ld", vim.lsp.buf.definition, opts)
+        opts = { buffer = bufnr, desc = "LSP: Find references" }
         vim.keymap.set("n", "<leader>lr", vim.lsp.buf.references, opts)
+        opts = { buffer = bufnr, desc = "LSP: Code actions" }
         vim.keymap.set({ "n", "v" }, "<leader>la", vim.lsp.buf.code_action, opts)
+        opts = { buffer = bufnr, desc = "LSP: Format buffer" }
         vim.keymap.set("n", "<leader>lf", vim.lsp.buf.format, opts)
+        opts = { buffer = bufnr, desc = "LSP: Rename symbol" }
         vim.keymap.set('n', '<leader>ln', vim.lsp.buf.rename, opts)
       end
 
