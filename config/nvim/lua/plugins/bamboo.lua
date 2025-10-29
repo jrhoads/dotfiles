@@ -5,7 +5,7 @@ return {
 		priority = 1000,
 		config = function()
 			require('bamboo').setup {
-				style = "multiplex",
+				style = "vulgaris",
 			}
 		end,
 	},

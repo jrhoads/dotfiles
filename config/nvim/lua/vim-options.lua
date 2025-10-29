@@ -6,6 +6,9 @@ vim.opt.cursorline = true
 
 vim.opt.number = true
 vim.opt.relativenumber = true
+vim.opt.signcolumn = 'yes'
+vim.opt.winborder = "rounded"
+
 vim.opt.ruler = true
 vim.opt.visualbell = true
 vim.opt.listchars = { tab = '| ', trail = '·', eol = '↴' }
