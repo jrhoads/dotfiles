@@ -15,14 +15,34 @@ return {
     config = function()
       require("mason-lspconfig").setup({
         ensure_installed = {
-          "tailwindcss",
-          -- "ruby_lsp",
-          "html",
-          "ts_ls",
-          "lua_ls",
         },
       })
     end
+  },
+
+  -- mason-tool-installer.nvim
+  { "WhoIsSethDaniel/mason-tool-installer.nvim",
+    dependencies = {
+      "mason.nvim",
+      "mason-lspconfig.nvim",
+    },
+    config = function()
+      require("mason-tool-installer").setup({
+        ensure_installed = {
+          "prettier",
+          "stylua",
+          -- "black",
+          "tailwindcss",
+          -- "ruby_lsp",
+          "gopls",
+          "goimports",
+          "html",
+          "ts_ls",
+          "lua_ls",
+          "actionlint",
+        },
+      })
+    end,
   },
   {
     "neovim/nvim-lspconfig",
@@ -52,21 +72,24 @@ return {
       -- Blink Capabilities
       local capabilities = require('blink.cmp').get_lsp_capabilities()
       -- Common LSP settings
-      local lspconfig = require("lspconfig")
+      -- local lspconfig = require("lspconfig")
+      -- local lspconfig = vim.lsp.config
       local servers = {
         "tailwindcss",
         "html",
         "ts_ls",
         "lua_ls",
+        "gopls",
       }
 
       -- Set up each server
       for _, server in ipairs(servers) do
-        lspconfig[server].setup({
-          on_attach = on_attach,
-        })
+        vim.lsp.enable(server)
+        -- lspconfig[server].setup({
+        --   on_attach = on_attach,
+        -- })
       end
-      lspconfig.lua_ls.setup { capabilities = capabilities }
+      -- lspconfig.lua_ls.setup { capabilities = capabilities }
     end,
   },
 }
