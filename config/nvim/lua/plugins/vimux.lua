@@ -1,5 +1,6 @@
 return {
 	'preservim/vimux',
+  enabled = false,
 	config = function()
 		vim.g.VimuxOrientation = "hb"
 		vim.keymap.set('n', '<leader>z', ":VimuxTogglePane<cr>", { silent = true })
