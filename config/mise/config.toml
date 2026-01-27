@@ -27,4 +27,4 @@ starship = "latest"
 tmux = "latest"
 uv = "latest"
 zoxide = "latest"
-# hub = "latest"  # optional; uncomment if you use gh/hub (Brewfile had it)
+hub = "latest"  # optional; uncomment if you use gh/hub (Brewfile had it)
