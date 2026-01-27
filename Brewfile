@@ -1,3 +1,4 @@
+# Linux/WSL: mise is preferred; tools are in config/mise/config.toml. Use ./install homebrew only for legacy or macOS.
 brew "bat"
 #brew "asdf"
 brew "fzf"
