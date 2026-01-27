@@ -125,6 +125,14 @@ setup_mise() {
         export PATH="${HOME}/.local/bin:${PATH}"
         success "mise installed"
     fi
+    # Activate mise shims so tools are available in this shell
+    if command -v mise >/dev/null 2>&1; then
+        if eval "$(mise activate bash --shims)" 2>/dev/null; then
+            info "mise shims activated for this shell"
+        else
+            warning "Failed to activate mise shims; tools may not be on PATH in this shell"
+        fi
+    fi
     info "Installing tools from config/mise/config.toml"
     mise install
     success "mise tools installed"
