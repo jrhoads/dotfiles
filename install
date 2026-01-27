@@ -180,12 +180,12 @@ function install_tmux_plugins() {
   success "tmux plugins installed"
 }
 
-function install_pipx_packages() {
-    title "Installing pipx packages"
+function install_uv_tools() {
+    title "Installing Python CLI tools (uv)"
 
-    info "Installing pipx packages"
-    ./install_pipx_packages.sh
-    success "pipx packages installed"
+    info "Installing Python CLI tools (uv)"
+    "$DOTFILES/install_uv_tools.sh"
+    success "uv tools installed"
 }
 
 function setup_terminfo() {
@@ -201,7 +201,7 @@ function setup_terminfo() {
 }
 
 function install_all_packages() {
-    install_pipx_packages
+    install_uv_tools
     install_tmux_plugins
     # install_neovim_plugins
 }
