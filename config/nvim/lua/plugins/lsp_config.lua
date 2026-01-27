@@ -15,14 +15,34 @@ return {
     config = function()
       require("mason-lspconfig").setup({
         ensure_installed = {
-          "tailwindcss",
-          -- "ruby_lsp",
-          "html",
-          "ts_ls",
-          "lua_ls",
         },
       })
     end
+  },
+
+  -- mason-tool-installer.nvim
+  { "WhoIsSethDaniel/mason-tool-installer.nvim",
+    dependencies = {
+      "mason.nvim",
+      "mason-lspconfig.nvim",
+    },
+    config = function()
+      require("mason-tool-installer").setup({
+        ensure_installed = {
+          "prettier",
+          "stylua",
+          -- "black",
+          "tailwindcss",
+          -- "ruby_lsp",
+          "gopls",
+          "goimports",
+          "html",
+          "ts_ls",
+          "lua_ls",
+          "actionlint",
+        },
+      })
+    end,
   },
   {
     "neovim/nvim-lspconfig",
@@ -35,33 +55,41 @@ return {
     config = function(_, opts)
       -- Set up keymaps first so they're ready even before LSP attaches
       local function on_attach(_, bufnr)
-        local opts = { buffer = bufnr }
+        local opts = { buffer = bufnr, desc = "LSP: Show documentation" }
         vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
+        opts = { buffer = bufnr, desc = "LSP: Go to definition" }
         vim.keymap.set("n", "<leader>ld", vim.lsp.buf.definition, opts)
+        opts = { buffer = bufnr, desc = "LSP: Find references" }
         vim.keymap.set("n", "<leader>lr", vim.lsp.buf.references, opts)
+        opts = { buffer = bufnr, desc = "LSP: Code actions" }
         vim.keymap.set({ "n", "v" }, "<leader>la", vim.lsp.buf.code_action, opts)
+        opts = { buffer = bufnr, desc = "LSP: Format buffer" }
         vim.keymap.set("n", "<leader>lf", vim.lsp.buf.format, opts)
+        opts = { buffer = bufnr, desc = "LSP: Rename symbol" }
         vim.keymap.set('n', '<leader>ln', vim.lsp.buf.rename, opts)
       end
 
       -- Blink Capabilities
       local capabilities = require('blink.cmp').get_lsp_capabilities()
       -- Common LSP settings
-      local lspconfig = require("lspconfig")
+      -- local lspconfig = require("lspconfig")
+      -- local lspconfig = vim.lsp.config
       local servers = {
         "tailwindcss",
         "html",
         "ts_ls",
         "lua_ls",
+        "gopls",
       }
 
       -- Set up each server
       for _, server in ipairs(servers) do
-        lspconfig[server].setup({
-          on_attach = on_attach,
-        })
+        vim.lsp.enable(server)
+        -- lspconfig[server].setup({
+        --   on_attach = on_attach,
+        -- })
       end
-      lspconfig.lua_ls.setup { capabilities = capabilities }
+      -- lspconfig.lua_ls.setup { capabilities = capabilities }
     end,
   },
 }

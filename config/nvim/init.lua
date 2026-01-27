@@ -26,5 +26,8 @@ vim.api.nvim_set_hl(0, 'SnacksDashboardKey', {fg='#FFFFFF', bold = true})
 vim.api.nvim_set_hl(0, 'SnacksDashboardHeader', {fg='coral'})
 vim.api.nvim_set_hl(0, 'WinSeparator', { fg = '#808080', bg = 'NONE' })
 
+-- set colorcolum color to gray
+vim.api.nvim_set_hl(0, 'ColorColumn', { bg = '#808080' })
+
 -- -- Make split borders subtle
 vim.opt.fillchars = "vert:│,horiz:─"

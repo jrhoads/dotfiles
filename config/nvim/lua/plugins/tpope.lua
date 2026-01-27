@@ -8,8 +8,8 @@ return {
     end,
   },
   {'tpope/vim-unimpaired'},
-  {'tpope/vim-dispatch'},
+  -- {'tpope/vim-dispatch'},
   {'tpope/vim-endwise'},
-  {'tpope/vim-eunuch'},
-  {'tpope/vim-fugitive'}
+  -- {'tpope/vim-eunuch'},
+  -- {'tpope/vim-fugitive'}
 }

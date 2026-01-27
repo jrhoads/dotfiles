@@ -3,9 +3,12 @@ return {
   priority = 1000,
   lazy = false,
   opts = {
+    explorer = {
+      replace_netrw = true,
+    },
     bigfile = { enabled = true },
     dashboard = {
-      enabled = false,
+      enabled = true,
       preset = {
         header = [[
                                                                              
@@ -33,7 +36,8 @@ return {
       notification = {
         wo = { wrap = true } -- Wrap notifications
       }
-    }
+    },
+    -- ui_select = true,
   },
   keys = {
     { "<leader>n",  function() Snacks.notifier.show_history() end, desc = "Notification History" },

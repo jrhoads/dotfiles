@@ -3,7 +3,7 @@ return {
   enabled=true,
   dependencies = {
     "rafamadriz/friendly-snippets",
-    "Kaiser-Yang/blink-cmp-avante",
+    -- "Kaiser-Yang/blink-cmp-avante",
     -- "mikavilpas/blink-ripgrep.nvim",
     -- 'dmitmel/cmp-digraphs',
     -- "Exafunction/codeium.nvim",
@@ -63,7 +63,7 @@ return {
     },
     sources = {
       default = {
-        "avante",
+        -- "avante",
         "lsp",
         -- "codeium",
         "lazydev",
@@ -74,13 +74,13 @@ return {
         -- "digraphs",
       },
       providers = {
-        avante = {
-          module = 'blink-cmp-avante',
-          name = 'Avante',
-          opts = {
-            -- options for blink-cmp-avante
-          },
-        },
+        -- avante = {
+        --   module = 'blink-cmp-avante',
+        --   name = 'Avante',
+        --   opts = {
+        --     -- options for blink-cmp-avante
+        --   },
+        -- },
         lsp = {
           name = 'LSP',
           module = 'blink.cmp.sources.lsp',
