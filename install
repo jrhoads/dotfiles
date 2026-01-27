@@ -115,8 +115,24 @@ setup_symlinks() {
 
 }
 
+setup_mise() {
+    title "Setting up mise"
+
+    export PATH="${HOME}/.local/bin:${PATH:-}"
+    if ! command -v mise >/dev/null 2>&1; then
+        info "mise not installed. Installing."
+        curl -fsSL https://mise.run | MISE_QUIET=1 sh
+        export PATH="${HOME}/.local/bin:${PATH}"
+        success "mise installed"
+    fi
+    info "Installing tools from config/mise/config.toml"
+    mise install
+    success "mise tools installed"
+}
+
 setup_homebrew() {
     title "Setting up Homebrew"
+    warning "mise is now the default on Linux/WSL. Use this only for legacy or macOS."
 
     if test ! "$(command -v brew)"; then
         info "Homebrew not installed. Installing."
@@ -164,12 +180,12 @@ function install_tmux_plugins() {
   success "tmux plugins installed"
 }
 
-function install_pipx_packages() {
-    title "Installing pipx packages"
+function install_uv_tools() {
+    title "Installing Python CLI tools (uv)"
 
-    info "Installing pipx packages"
-    ./install_pipx_packages.sh
-    success "pipx packages installed"
+    info "Installing Python CLI tools (uv)"
+    "$DOTFILES/install_uv_tools.sh"
+    success "uv tools installed"
 }
 
 function setup_terminfo() {
@@ -185,7 +201,7 @@ function setup_terminfo() {
 }
 
 function install_all_packages() {
-    install_pipx_packages
+    install_uv_tools
     install_tmux_plugins
     # install_neovim_plugins
 }
@@ -206,13 +222,14 @@ case "$1" in
     all)
         setup_symlinks
         setup_terminfo
-        setup_homebrew
+        setup_mise
+        install_all_packages
         ;;
     *)
-        #echo -e $"\nUsage: $(basename "$0") {backup|link|git|homebrew|shell|terminfo|macos|all}\n"
+        # Default: symlinks, terminfo, mise (not homebrew), then extra packages
         setup_symlinks
         setup_terminfo
-        setup_homebrew
+        setup_mise
         install_all_packages
         ;;
 esac
