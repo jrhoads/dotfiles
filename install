@@ -4,6 +4,8 @@ set -e
 
 
 DOTFILES="$(pwd)"
+BACKUP_DIR="$HOME/dotfiles-backup"
+BACKUP_RUN_DIR=""
 COLOR_GRAY="\033[1;38;5;243m"
 COLOR_BLUE="\033[1;34m"
 COLOR_GREEN="\033[1;32m"
@@ -38,44 +40,85 @@ get_linkables() {
     find -H "$DOTFILES" -maxdepth 3 -name '*.symlink'
 }
 
-backup() {
-    BACKUP_DIR=$HOME/dotfiles-backup
+backup_run_dir() {
+    local ts
+    ts="$(date +%Y%m%d-%H%M%S)"
+    echo "${BACKUP_DIR%/}/$ts"
+}
 
+backup_path_for() {
+    local dest="$1"
+    if [[ "$dest" == "$HOME" ]]; then
+        echo ".home"
+        return 0
+    fi
+    if [[ "$dest" == "$HOME/"* ]]; then
+        echo "${dest#"$HOME/"}"
+        return 0
+    fi
+    dest="${dest#/}"
+    echo "_external/$dest"
+}
+
+force_link() {
+    local source="$1"
+    local dest="$2"
+
+    if [ -e "$dest" ] || [ -L "$dest" ]; then
+        info "Removing existing ~${dest#$HOME}"
+        rm -rf "$dest"
+    fi
+
+    info "Creating symlink for $source"
+    ln -s "$source" "$dest"
+}
+
+backup() {
     echo "Creating backup directory at $BACKUP_DIR"
     mkdir -p "$BACKUP_DIR"
+
+    BACKUP_RUN_DIR="$(backup_run_dir)"
+    mkdir -p "$BACKUP_RUN_DIR"
+    info "Backing up existing targets into $BACKUP_RUN_DIR"
+
+    backup_target_if_present() {
+        local dest="$1"
+        if [ -e "$dest" ] && [ ! -L "$dest" ]; then
+            local rel out
+            rel="$(backup_path_for "$dest")"
+            out="$BACKUP_RUN_DIR/$rel"
+            mkdir -p "$(dirname "$out")"
+            cp -a "$dest" "$out"
+        fi
+    }
 
     for file in $(get_linkables); do
         filename="$(basename "$file" '.symlink')"
         target="$HOME/$filename"
-        if [ -f "$target" ]; then
-            echo "backing up $filename"
-            cp "$target" "$BACKUP_DIR"
-        else
-            warning "$filename does not exist at this location or is a symlink"
-        fi
+        backup_target_if_present "$target"
     done
 
-    for filename in "$HOME/.config/nvim" "$HOME/.vim" "$HOME/.vimrc"; do
-        if [ ! -L "$filename" ]; then
-            echo "backing up $filename"
-            cp -rf "$filename" "$BACKUP_DIR"
-        else
-            warning "$filename does not exist at this location or is a symlink"
-        fi
+    config_files=$(find "$DOTFILES/config" -mindepth 1 -maxdepth 1 2>/dev/null)
+    for config in $config_files; do
+        target="$HOME/.config/$(basename "$config")"
+        backup_target_if_present "$target"
+    done
+
+    bin_files=$(find "$DOTFILES/local/bin" -mindepth 1 -maxdepth 1 2>/dev/null)
+    for bin in $bin_files; do
+        target="$HOME/.local/bin/$(basename "$bin")"
+        backup_target_if_present "$target"
     done
 }
 
 setup_symlinks() {
     title "Creating symlinks"
 
+    info "Force-linking; assumes backup already happened"
+
     for file in $(get_linkables) ; do
         target="$HOME/$(basename "$file" '.symlink')"
-        if [ -e "$target" ]; then
-            info "~${target#$HOME} already exists... Skipping."
-        else
-            info "Creating symlink for $file"
-            ln -s "$file" "$target"
-        fi
+        force_link "$file" "$target"
     done
 
     echo -e
@@ -85,18 +128,13 @@ setup_symlinks() {
         mkdir -p "$HOME/.config"
     fi
 
-    config_files=$(find "$DOTFILES/config" -maxdepth 1 2>/dev/null)
+    config_files=$(find "$DOTFILES/config" -mindepth 1 -maxdepth 1 2>/dev/null)
     for config in $config_files; do
         target="$HOME/.config/$(basename "$config")"
-        if [ -e "$target" ]; then
-            info "~${target#$HOME} already exists... Skipping."
-        else
-            info "Creating symlink for $config"
-            ln -s "$config" "$target"
-        fi
+        force_link "$config" "$target"
     done
 
-    bin_files=$(find "$DOTFILES/local/bin" -maxdepth 1 2>/dev/null)
+    bin_files=$(find "$DOTFILES/local/bin" -mindepth 1 -maxdepth 1 2>/dev/null)
     info "installing to ~/.local/bin"
     if [ ! -d "$HOME/.local/bin" ]; then
         info "Creating ~/.local/bin"
@@ -105,12 +143,7 @@ setup_symlinks() {
 
     for bin in $bin_files; do
         target="$HOME/.local/bin/$(basename "$bin")"
-        if [ -e "$target" ]; then
-            info "~${target#$HOME} already exists... Skipping."
-        else
-            info "Creating symlink for $bin"
-            ln -s "$bin" "$target"
-        fi
+        force_link "$bin" "$target"
     done
 
 }
@@ -192,7 +225,7 @@ function install_uv_tools() {
     title "Installing Python CLI tools (uv)"
 
     info "Installing Python CLI tools (uv)"
-    "$DOTFILES/install_uv_tools.sh"
+    bash "$DOTFILES/install_uv_tools.sh"
     success "uv tools installed"
 }
 
@@ -228,6 +261,7 @@ case "$1" in
         setup_terminfo
         ;;
     all)
+        backup
         setup_symlinks
         setup_terminfo
         setup_mise
@@ -235,6 +269,7 @@ case "$1" in
         ;;
     *)
         # Default: symlinks, terminfo, mise (not homebrew), then extra packages
+        backup
         setup_symlinks
         setup_terminfo
         setup_mise
