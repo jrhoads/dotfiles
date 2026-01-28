@@ -15,7 +15,6 @@ Session.vim
 *.dvi
 *.aux
 *.elc
-Brewfile.lock.json
 config/mise/config.local.toml
 config/nvim/lazy-lock.json
 .gitconfig.symlink

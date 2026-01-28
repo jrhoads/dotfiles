@@ -171,37 +171,6 @@ setup_mise() {
     success "mise tools installed"
 }
 
-setup_homebrew() {
-    title "Setting up Homebrew"
-    warning "mise is now the default on Linux/WSL. Use this only for legacy or macOS."
-
-    if test ! "$(command -v brew)"; then
-        info "Homebrew not installed. Installing."
-        # Run as a login shell (non-interactive) so that the script doesn't pause for user input
-        sudo apt-get install build-essential
-        NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-        eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
-        echo "eval \"\$($(brew --prefix)/bin/brew shellenv)\"" >> ~/.bashrc
-        success "Homebrew installed"
-    fi
-    # install brew dependencies from Brewfile
-    info "Installing brew dependencies from Brewfile"
-    brew bundle
-    success "brew dependencies installed"
-
-    # install zoxide
-    echo -e
-    info "Installing zoxide to the shell"
-    echo "eval \"\$($(brew --prefix)/bin/zoxide init bash)\"" >> ~/.bashrc
-    success "zoxide installed to the shell"
-
-    # install fzf
-    echo -e
-    info "Installing fzf to the shell"
-    "$(brew --prefix)"/opt/fzf/install --key-bindings --completion --no-update-rc --no-fish
-    success "fzf installed to the shell"
-  }
-
 function install_neovim_plugins() {
     title "Installing neovim plugins"
 
@@ -254,9 +223,6 @@ case "$1" in
     link)
         setup_symlinks
         ;;
-    homebrew)
-        setup_homebrew
-        ;;
     terminfo)
         setup_terminfo
         ;;
@@ -268,7 +234,7 @@ case "$1" in
         install_all_packages
         ;;
     *)
-        # Default: symlinks, terminfo, mise (not homebrew), then extra packages
+        # Default: symlinks, terminfo, mise, then extra packages
         backup
         setup_symlinks
         setup_terminfo
