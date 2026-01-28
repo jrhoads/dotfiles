@@ -2,7 +2,7 @@
 
 set -e
 
-# Ensure uv (installed via mise or Homebrew) is on PATH.
+# Ensure uv (installed via mise) is on PATH.
 export PATH="${HOME}/.local/bin:${PATH:-}"
 
 # Try to activate mise shims so mise-managed tools (like uv) are available.

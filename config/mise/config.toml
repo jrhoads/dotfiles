@@ -1,19 +1,19 @@
 # Global mise config (~/.config/mise/config.toml when dotfiles are linked).
-# Tools mirror Brewfile; per-machine overrides: config/mise/config.local.toml (gitignored).
+# Per-machine overrides: config/mise/config.local.toml (gitignored).
 #
-# Brewfile → mise mapping (Linux/WSL; Brew is legacy/optional via ./install homebrew):
-#   brew bat       → bat
-#   brew fd        → fd
-#   brew fzf       → fzf (run fzf install for keybindings if desired)
-#   brew lsd       → lsd
-#   brew hub       → hub (commented out; uncomment if needed)
-#   brew jq        → jq
-#   brew neovim    → neovim
-#   brew uv        → uv
-#   brew ripgrep   → ripgrep
-#   brew tmux      → tmux
-#   brew zoxide    → zoxide
-#   brew starship  → starship
+# Available tools:
+#   bat       - cat clone with syntax highlighting
+#   fd        - simple, fast file finder
+#   fzf       - command-line fuzzy finder (run fzf install for keybindings if desired)
+#   lsd       - ls alternative with icons
+#   hub       - GitHub CLI helper (optional; uncomment if needed)
+#   jq        - JSON processor
+#   neovim    - modern vim
+#   uv        - fast Python package installer
+#   ripgrep   - fast text search
+#   tmux      - terminal multiplexer
+#   zoxide    - smarter cd command
+#   starship  - cross-shell prompt
 
 [tools]
 bat = "latest"
@@ -27,4 +27,4 @@ starship = "latest"
 tmux = "latest"
 uv = "latest"
 zoxide = "latest"
-hub = "latest"  # optional; uncomment if you use gh/hub (Brewfile had it)
+hub = "latest"  # optional; uncomment if you use gh/hub
