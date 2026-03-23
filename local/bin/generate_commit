@@ -1,0 +1,51 @@
+#!/bin/bash
+
+# Get the git diff for staged changes
+DIFF_OUTPUT=$(git diff --cached)
+
+# Check if there are staged changes
+if [[ -z "$DIFF_OUTPUT" ]]; then
+    echo "No staged changes to summarize."
+    exit 0
+fi
+
+# Define the prompt for commit message generation
+COMMIT_PROMPT="
+        You will be given a git diff text.
+        Analyze ONLY the exact changes in this git diff and create a precise commit message.
+        Please write out a single line git commit message.
+        Do not every return multiple lines.
+        Don't add fluff. No string delimiters wrapping it, no yapping, no markdown, no fenced code.
+
+        FORMAT:
+        1. First line: \"<type>: <summary>\" (max 70 chars)
+        - Type: feat, fix, docs, refactor, test, etc.
+        - Summary must describe ONLY actual changes shown in the diff
+
+        IMPORTANT: Be 100% factual. Only mention code that was actually changed. Never invent or assume
+        changes not shown in the diff. If unsure about a change's purpose, describe what changed rather
+        than why. Output nothing except for the commit message, and don't surround it in quotes.
+"
+# Generate a summary commit message using llm
+COMMIT_MESSAGE=$(echo "$DIFF_OUTPUT" | llm "$COMMIT_PROMPT")
+
+# Check if llm command was successful
+if [[ $? -ne 0 ]]; then
+    echo "Error: llm command failed."
+    exit 1
+fi
+
+# Print the generated commit message
+echo "Generated commit message: $COMMIT_MESSAGE"
+
+# Prompt user for confirmation, defaulting to no
+read -p "Would you like to use this commit message? (y/N) " yn
+case ${yn:0:1} in
+    [Yy]* )
+        git commit -m "$COMMIT_MESSAGE"
+        ;;
+    * )
+        echo "Commit cancelled."
+        exit 0
+        ;;
+esac
