@@ -58,3 +58,7 @@ vim.keymap.set('n', '<C-q>', '<C-v>', { noremap = true })
  -- Remap the Line block to Shift-Q. 
 vim.keymap.set('n', 'Q','V', { noremap = true })
 
+-- Save with Ctrl-s
+-- also in insert mode
+keyset("i", "<C-s>", "<Esc>:w<cr>", { noremap = true })
+keyset("n", "<C-s>", ":w<cr>", { noremap = true })
