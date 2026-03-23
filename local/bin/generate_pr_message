@@ -1,0 +1,119 @@
+#!/bin/bash
+# Function to determine the main branch
+get_main_branch() {
+    # Check if either main or master exists and is valid
+    if git rev-parse --verify main >/dev/null 2>&1; then
+        echo "main"
+    elif git rev-parse --verify master >/dev/null 2>&1; then
+        echo "master"
+    else
+        echo "master"  # Default fallback
+    fi
+}
+# Initialize additional context variable
+ADDITIONAL_CONTEXT=""
+DIFF_PATH="."  # Default path
+TARGET_BRANCH="" # Initialize empty
+
+
+# Parse command line arguments
+# Added 'p:' to the options string
+# Added 'b:' to the target base branch
+while getopts "c:p:b:" opt; do
+  case $opt in
+    c) ADDITIONAL_CONTEXT=$(printf "Additional Context:\n%s\n\n" "$OPTARG");;
+    p) DIFF_PATH="$OPTARG";; # Set the path from the -p flag
+    b) TARGET_BRANCH="$OPTARG";; # Set the target branch from -b flag
+    \?) echo "Invalid option -$OPTARG" >&2;;
+  esac
+done
+shift $((OPTIND-1))
+
+
+# Define LLM title prompt
+LLM_TITLE_PROMPT="You are a helpful assistant that writes clear and concise PR titles. Given the following PR description, please create ONE PR title.  Don't add any fluff.  No yapping, no fenced code."
+# Define the LLM prompt
+LLM_PROMPT="You are a helpful assistant that writes clear and concise PR descriptions.
+Given the following git diff, please create a PR description that:
+1. Summarizes the main changes
+2. Lists the key modifications
+3. Highlights any important technical details
+4. Make sure to check the type of change but also include the other types as unchecked
+5. Do not reorder the types of changes
+6. Always include the reviewer guidelines
+
+Here is a template for the PR description:
+## Purpose
+
+## Approach
+
+### Key Modifications
+
+### Important Technical Details
+
+## Types of changes
+
+- [ ] Bug fix (non-breaking change which fixes an issue)
+- [ ] New feature (non-breaking change which adds functionality)
+- [ ] Breaking change (fix or feature that would cause existing functionality to change)
+
+## Reviewer, please remember our [guidelines](https://datacite.atlassian.net/wiki/spaces/TEC/pages/1168375809/Pull+Request+Guidelines):
+
+- Be humble in the language and feedback you give, ask don't tell.
+- Consider using positive language as opposed to neutral when offering feedback. This is to avoid the negative bias that can occur with neutral language appearing negative.
+- Offer suggestions on how to improve code e.g. simplification or expanding clarity.
+- Ensure you give reasons for the changes you are proposing.
+"
+# Get the current branch name
+CURRENT_BRANCH=$(git rev-parse --abbrev-ref HEAD)
+# Get the main branch name
+AUTO_MAIN_BRANCH=$(get_main_branch)
+
+# Use provided  target branch or auto-detected main branch
+BASE_BRANCH=${TARGET_BRANCH:-$AUTO_MAIN_BRANCH}
+
+# Get the diff between current branch and main branch for the specific path
+# The double hyphen -- ensures DIFF_PATH is treated as a path even if it looks like a flag
+DIFF_OUTPUT=$(git diff $BASE_BRANCH...$CURRENT_BRANCH -- "$DIFF_PATH" ':(exclude)*.json')
+
+if [ -z "$DIFF_OUTPUT" ]; then
+    echo "No changes detected between $BASE_BRANCH and $CURRENT_BRANCH"
+    exit 1
+fi
+
+# Generate PR message using the stored prompt
+PR_MESSAGE=$(printf "%s\n\n%s" "$ADDITIONAL_CONTEXT" "$DIFF_OUTPUT" | llm -s "$LLM_PROMPT")
+PR_TITLE=$(printf "%s\n\n%s" "$ADDITIONAL_CONTEXT" "$PR_MESSAGE" | llm -s "$LLM_TITLE_PROMPT")
+echo "-------------------"
+echo "TARGET BRANCH: $BASE_BRANCH"
+echo "$PR_TITLE"
+echo "==================="
+echo "$PR_MESSAGE"
+echo "-------------------"
+echo "The PR will be created from '$CURRENT_BRANCH' into '$BASE_BRANCH'."
+read -p "Create this Pull Request? (y/n): " USER_INPUT
+if [[ "$USER_INPUT" =~ ^[Yy]$ ]]; then
+    echo "Checking if branch '$CURRENT_BRANCH' needs to be pushed..."
+
+    # Check if the branch exists on remote
+    if ! git rev-parse --verify --quiet origin/"$CURRENT_BRANCH" > /dev/null; then
+        echo "Branch does not exist on remote. Pushing..."
+        git push -u origin "$CURRENT_BRANCH"
+    else
+        # Check if there are local commits not yet on remote
+        LOCAL_HASH=$(git rev-parse HEAD)
+        REMOTE_HASH=$(git rev-parse origin/"$CURRENT_BRANCH")
+
+        if [ "$LOCAL_HASH" != "$REMOTE_HASH" ]; then
+            echo "Local changes detected. Pushing to origin..."
+            git push origin "$CURRENT_BRANCH"
+        else
+            echo "Branch is up to date with remote."
+        fi
+    fi
+    # Proceed with current BASE_BRANCH
+    gh pr create --base "$BASE_BRANCH" --title "$PR_TITLE" --body "$PR_MESSAGE"
+else
+    echo "PR creation cancelled."
+    exit 0
+fi
