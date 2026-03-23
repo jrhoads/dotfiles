@@ -169,6 +169,11 @@ setup_mise() {
     info "Installing tools from config/mise/config.toml"
     mise install
     success "mise tools installed"
+    # only run these steps in GitHub Codespaces
+    if [[ "${CODESPACES:-}" == "true" ]]; then
+      mise use -g opencode
+      mise use -g npm:@fission-ai/openspec
+    fi
 }
 
 function install_neovim_plugins() {
