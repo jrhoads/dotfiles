@@ -22,7 +22,8 @@ bind-key -r C-a last-window
 bind-key -r n next-window
 bind-key -r C-n next-window
 bind -r Tab next-window
-bind -n C-s switch-client -n
+bind C-s switch-client -n
+unbind S
 
 # Prefix + K to kill current session and attach to the next one
 bind K run-shell 'tmux switch-client -n \; kill-session -t "#S"'
