@@ -7,6 +7,9 @@ alias dc='docker compose'
 alias git="hub"
 alias gits="git s"
 alias gb='git checkout -b'
+alias gc='generate_commit'
+alias gm='generate_pr_message'
+alias gs='git s'
 alias ls="lsd -h"
 alias l='ls -F'
 alias la='ls -A'
@@ -16,10 +19,12 @@ alias pipup='pip install -U pip'
 alias pss="python -m http.server"
 alias ssh="ssh -q"
 alias vim='nvim'
+alias v='nvim'
 alias f='fd'
 alias cd="z"
 alias tma='tm'
 alias t="tm"
+alias tsc="npx tsc"
 function gi(){ git s ;}
 function gd(){ git diff $1 | dunk ;}
 #
