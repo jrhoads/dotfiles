@@ -25,6 +25,9 @@ COMMIT_PROMPT="
         IMPORTANT: Be 100% factual. Only mention code that was actually changed. Never invent or assume
         changes not shown in the diff. If unsure about a change's purpose, describe what changed rather
         than why. Output nothing except for the commit message, and don't surround it in quotes.
+
+        Please write out a single line git commit message.
+        Do not ever return multiple lines.
 "
 # Generate a summary commit message using llm
 COMMIT_MESSAGE=$(echo "$DIFF_OUTPUT" | llm "$COMMIT_PROMPT")
