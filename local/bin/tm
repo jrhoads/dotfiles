@@ -29,7 +29,7 @@ for opt in "${options[@]}"; do
 done
 # Use fzf to select an option with enhanced UI options
 # The output will have query on first line, selection on second line (if any)
-readarray -t fzf_output < <(printf '%s\n' "${formatted_options[@]}" | fzf-tmux -p --print-query --height=10% --layout=reverse --border --exit-0 --prompt='Select TMUX session: ')
+readarray -t fzf_output < <(printf '%s\n' "${formatted_options[@]}" | fzf-tmux -p --print-query --height=10% --layout=reverse --border --exit-0 --prompt='Select TMUX session: ' --ansi)
 
 query="${fzf_output[0]}"
 selected="${fzf_output[1]:-}"
