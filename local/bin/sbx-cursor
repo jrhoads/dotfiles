@@ -1,0 +1,226 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+for command in sbx jq fzf cursor; do
+    if ! command -v "$command" >/dev/null 2>&1; then
+        echo "Error: '$command' is not installed or not in PATH." >&2
+        exit 1
+    fi
+done
+
+if ! sbx_json="$(sbx ls --json)"; then
+    echo "Error: failed to list sandboxes." >&2
+    exit 1
+fi
+
+if ! records="$(
+    jq -c '
+        [
+            .sandboxes[]? as $sandbox
+            | ($sandbox.workspaces // [])[]? as $workspace
+            | select(($workspace | type) == "string" and $workspace != "")
+            | {
+                name:      $sandbox.name,
+                agent:     ($sandbox.agent // ""),
+                status:    ($sandbox.status // ""),
+                workspace: $workspace
+            }
+        ]
+        | sort_by([
+            (
+                .status
+                | ascii_downcase
+                | if . == "running" then 0
+                  elif . == "starting" then 1
+                  elif . == "error" or . == "failed" then 3
+                  else 2 end
+            ),
+            .name
+        ])
+    ' <<<"$sbx_json"
+)"; then
+    echo "Error: unable to parse output from 'sbx ls --json'." >&2
+    exit 1
+fi
+
+if ! raw_menu="$(
+    jq -r '
+        to_entries[]
+        | [.key, .value.name, .value.agent, .value.status, .value.workspace]
+        | @tsv
+    ' <<<"$records"
+)"; then
+    echo "Error: unable to build sandbox menu." >&2
+    exit 1
+fi
+
+if [[ -z "$raw_menu" ]]; then
+    echo "No sandbox workspaces found." >&2
+    exit 1
+fi
+
+if ! menu="$(
+    printf '%s\n' "$raw_menu" |
+        awk -F '\t' -v esc="$(printf '\033')" '
+            BEGIN {
+                name_width   = length("SANDBOX")
+                agent_width  = length("AGENT")
+                status_width = length("STATUS")
+            }
+
+            {
+                count++
+
+                record_id[count] = $1
+                name[count]      = $2
+                agent[count]     = $3
+                status[count]    = $4
+                workspace[count] = $5
+
+                status_text[count] = status_symbol($4) " " $4
+                status_disp[count] = 2 + length($4)
+
+                if (length(name[count]) > name_width) {
+                    name_width = length(name[count])
+                }
+
+                if (length(agent[count]) > agent_width) {
+                    agent_width = length(agent[count])
+                }
+
+                if (status_disp[count] > status_width) {
+                    status_width = status_disp[count]
+                }
+            }
+
+            END {
+                printf "__HEADER__\t%-*s  %-*s  %-*s  %s\n",
+                    name_width,   "SANDBOX",
+                    agent_width,  "AGENT",
+                    status_width, "STATUS",
+                                  "WORKSPACE"
+
+                for (i = 1; i <= count; i++) {
+                    color = status_color(status[i])
+                    reset = color == "" ? "" : esc "[0m"
+                    pad = status_width - status_disp[i]
+                    if (pad < 0) {
+                        pad = 0
+                    }
+
+                    printf "%s\t%-*s  %-*s  %s%s%*s%s  %s\n",
+                        record_id[i],
+                        name_width, name[i],
+                        agent_width, agent[i],
+                        color,
+                        status_text[i],
+                        pad, "",
+                        reset,
+                        workspace[i]
+                }
+            }
+
+            function status_symbol(value) {
+                value = tolower(value)
+
+                if (value == "running") {
+                    return "●"
+                }
+
+                if (value == "stopped") {
+                    return "○"
+                }
+
+                if (value == "starting") {
+                    return "◐"
+                }
+
+                if (value == "error" || value == "failed") {
+                    return "!"
+                }
+
+                return "?"
+            }
+
+            function status_color(value) {
+                value = tolower(value)
+
+                if (value == "running") {
+                    return esc "[32m"
+                }
+
+                if (value == "stopped") {
+                    return esc "[90m"
+                }
+
+                if (value == "starting") {
+                    return esc "[33m"
+                }
+
+                if (value == "error" || value == "failed") {
+                    return esc "[31m"
+                }
+
+                return esc "[36m"
+            }
+        '
+)"; then
+    echo "Error: unable to format sandbox menu." >&2
+    exit 1
+fi
+
+query="$*"
+
+if ! selected="$(
+    printf '%s\n' "$menu" |
+        fzf \
+            --ansi \
+            --delimiter=$'\t' \
+            --with-nth=2 \
+            --header-lines=1 \
+            --layout=reverse \
+            --height=70% \
+            --min-height=15 \
+            --border=rounded \
+            --info=inline-right \
+            --prompt=" Open sandbox › " \
+            --pointer="▶" \
+            --marker="✓" \
+            --color="header:bold" \
+            --color="prompt:cyan,pointer:cyan,marker:green" \
+            --query="$query" \
+            --select-1 \
+            --exit-0
+)"; then
+    exit 0
+fi
+
+[[ -n "$selected" ]] || exit 0
+
+record_index="${selected%%$'\t'*}"
+
+if [[ ! "$record_index" =~ ^[0-9]+$ ]]; then
+    echo "Error: invalid sandbox selection." >&2
+    exit 1
+fi
+
+if ! record="$(
+    jq -cer \
+        --argjson index "$record_index" \
+        '.[$index]' \
+        <<<"$records"
+)"; then
+    echo "Error: selected sandbox record no longer exists." >&2
+    exit 1
+fi
+
+sandbox="$(jq -r '.name' <<<"$record")"
+workspace="$(jq -r '.workspace' <<<"$record")"
+status="$(jq -r '.status' <<<"$record")"
+
+printf 'Opening %s in Cursor...\n' "$sandbox"
+printf 'Status:    %s\n' "$status"
+printf 'Workspace: %s\n' "$workspace"
+
+cursor --remote ssh-remote+${sandbox}.sbx $workspace
