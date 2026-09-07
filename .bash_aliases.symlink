@@ -40,3 +40,20 @@ alias ..='cd ..'
 alias ...='cd ../..'
 alias ....='cd ../../..'
 alias .....='cd ../../../..'
+function llm-default() {
+    local model
+
+    model="$(
+        llm models |
+        sed -E \
+            -e 's/^[^:]*:[[:space:]]*//' \
+            -e 's/[[:space:]]+\(aliases:.*\)$//' |
+        fzf --height=40% --reverse --prompt='Default model: '
+    )"
+
+    # Do nothing if fzf was cancelled
+    [[ -z "$model" ]] && return 0
+
+    llm models default "$model"
+    printf 'Default model set to: %s\n' "$model"
+}
